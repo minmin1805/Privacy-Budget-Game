@@ -1,0 +1,471 @@
+{
+  "version": 1,
+  "gameMode": "privacy-budget",
+  "sourceDoc": "docs/content.md",
+  "audienceOptions": ["Public", "Friends", "Close Friends", "Only Me"],
+  "photoOptionsOrder": ["Original", "Option A", "Option B"],
+  "levels": [
+    {
+      "id": 1,
+      "slug": "picture-at-the-gate",
+      "title": "Picture at the gate",
+      "riskProfile": "dangerous",
+      "scenarioDescription": "Alex is excited about a big day and wants to share a quick selfie from outside a school. The building behind them includes clear identifying context if the frame stays wide. Decide who should see it, whether location is attached, what the caption says, and whether the photo should stay wide or get tighter.",
+      "defaultPost": {
+        "audience": "Public",
+        "locationTagOn": true,
+        "captionMode": "keep",
+        "caption": "First day energy! So excited :)",
+        "photoOption": "Original"
+      },
+      "imageAsset": {
+        "id": "level-01-picture-at-the-gate",
+        "alt": "Selfie outside a school building",
+        "srcOriginal": "/assets/privacy-budget/level-01/original.webp",
+        "srcOptionA": "/assets/privacy-budget/level-01/option-a.webp",
+        "srcOptionB": "/assets/privacy-budget/level-01/option-b.webp"
+      },
+      "photoOptionLabels": {
+        "Original": {
+          "title": "Original",
+          "description": "Wide frame; school context and background visible."
+        },
+        "Option A": {
+          "title": "Option A",
+          "subtitle": "Crop A",
+          "description": "Tighter crop; readable fictional school sign RIVERSIDE HIGH may still appear depending on frame."
+        },
+        "Option B": {
+          "title": "Option B",
+          "subtitle": "Crop B (tightest)",
+          "description": "Tightest crop; reduces identifying background; gold path for this level."
+        }
+      },
+      "riskZonesOriginal": {
+        "Option A": "Readable fictional school sign: RIVERSIDE HIGH",
+        "Option B": "Friends in the background"
+      },
+      "goldPathSummary": {
+        "audience": ["Friends"],
+        "locationTagOff": true,
+        "captionRule": "edit",
+        "captionExamples": [
+          "Excited for today—good vibes only."
+        ],
+        "captionCoachNote": "No school name, no “at school / here” anchors.",
+        "photoOption": "Option B",
+        "photoPartialCredit": "Option A"
+      }
+    },
+    {
+      "id": 2,
+      "slug": "friends-at-the-fair",
+      "title": "Friends at the fair",
+      "riskProfile": "dangerous",
+      "scenarioDescription": "You’re at a community event with friends and someone snaps a group photo. A big banner and booth details can anchor where and when this was—more than you want if the post is too public or location-tagged.",
+      "defaultPost": {
+        "audience": "Public",
+        "locationTagOn": true,
+        "captionMode": "keep",
+        "caption": "Such a great day out with friends!",
+        "photoOption": "Original"
+      },
+      "imageAsset": {
+        "id": "level-02-friends-at-the-fair",
+        "alt": "Group photo at a community fair with banners",
+        "srcOriginal": "/assets/privacy-budget/level-02/original.webp",
+        "srcOptionA": "/assets/privacy-budget/level-02/option-a.webp",
+        "srcOptionB": "/assets/privacy-budget/level-02/option-b.webp"
+      },
+      "photoOptionLabels": {
+        "Original": {
+          "title": "Original",
+          "description": "Banner and booth details visible."
+        },
+        "Option A": {
+          "title": "Option A",
+          "description": "Edit that reduces banner / MAIN STAGE cues (gold path)."
+        },
+        "Option B": {
+          "title": "Option B",
+          "description": "Alternate crop/blur focused on food-stall area."
+        }
+      },
+      "riskZonesOriginal": {
+        "Option A": "Readable banner SPRING FEST 2026 and line MAIN STAGE",
+        "Option B": "Food-stall chalkboard"
+      },
+      "goldPathSummary": {
+        "audience": ["Friends"],
+        "locationTagOff": true,
+        "captionRule": "edit",
+        "captionExamples": ["Fun day with my people."],
+        "photoOption": "Option A"
+      }
+    },
+    {
+      "id": 3,
+      "slug": "new-wheels",
+      "title": "New wheels",
+      "riskProfile": "dangerous",
+      "scenarioDescription": "You want to show off a new car. A normal photo can still expose too much if a license plate or windshield pass stays visible to a broad audience—especially with location on.",
+      "defaultPost": {
+        "audience": "Public",
+        "locationTagOn": true,
+        "captionMode": "keep",
+        "caption": "Finally got her!!",
+        "photoOption": "Original"
+      },
+      "imageAsset": {
+        "id": "level-03-new-wheels",
+        "alt": "New car photo with plate and background visible",
+        "srcOriginal": "/assets/privacy-budget/level-03/original.webp",
+        "srcOptionA": "/assets/privacy-budget/level-03/option-a.webp",
+        "srcOptionB": "/assets/privacy-budget/level-03/option-b.webp"
+      },
+      "photoOptionLabels": {
+        "Original": {
+          "title": "Original",
+          "description": "Plate and background billboard visible."
+        },
+        "Option A": {
+          "title": "Option A",
+          "description": "Reduces plate / pass visibility (gold path)."
+        },
+        "Option B": {
+          "title": "Option B",
+          "description": "Alternative crop on background billboard."
+        }
+      },
+      "riskZonesOriginal": {
+        "Option A": "Readable plate 7XYZ 482",
+        "Option B": "Billboard banner in the background"
+      },
+      "goldPathSummary": {
+        "audience": ["Friends", "Close Friends"],
+        "locationTagOff": true,
+        "captionRule": "edit",
+        "captionExamples": ["So happy with my new ride."],
+        "photoOption": "Option A"
+      }
+    },
+    {
+      "id": 4,
+      "slug": "sideline-snap",
+      "title": "Sideline snap",
+      "riskProfile": "dangerous",
+      "scenarioDescription": "Someone took a sideline photo during practice. The frame includes jersey identity and a schedule cue in the background.",
+      "defaultPost": {
+        "audience": "Public",
+        "locationTagOn": true,
+        "captionMode": "keep",
+        "caption": "Practice was intense today!",
+        "photoOption": "Original"
+      },
+      "imageAsset": {
+        "id": "level-04-sideline-snap",
+        "alt": "Sideline practice photo with board and jerseys",
+        "srcOriginal": "/assets/privacy-budget/level-04/original.webp",
+        "srcOptionA": "/assets/privacy-budget/level-04/option-a.webp",
+        "srcOptionB": "/assets/privacy-budget/level-04/option-b.webp"
+      },
+      "photoOptionLabels": {
+        "Original": {
+          "title": "Original",
+          "description": "Schedule board and jersey details visible."
+        },
+        "Option A": {
+          "title": "Option A",
+          "description": "Targets schedule board PRACTICE 4:30."
+        },
+        "Option B": {
+          "title": "Option B",
+          "description": "Reduces jersey/name tag R. SANTOS exposure (gold path)."
+        }
+      },
+      "riskZonesOriginal": {
+        "Option A": "Schedule board PRACTICE 4:30",
+        "Option B": "Jersey and name tag R. SANTOS"
+      },
+      "goldPathSummary": {
+        "audience": ["Close Friends"],
+        "locationTagOff": true,
+        "captionRule": "edit",
+        "captionExamples": ["Good practice today."],
+        "photoOption": "Option B"
+      }
+    },
+    {
+      "id": 5,
+      "slug": "coffee-catch-up",
+      "title": "Coffee catch-up",
+      "riskProfile": "safe",
+      "scenarioDescription": "A relaxed coffee table photo with friends. Nothing in the frame needs hiding; the lesson is audience, location, and caption.",
+      "defaultPost": {
+        "audience": "Public",
+        "locationTagOn": true,
+        "captionMode": "keep",
+        "caption": "Best talks happen over coffee.",
+        "photoOption": "Original"
+      },
+      "imageAsset": {
+        "id": "level-05-coffee-catch-up",
+        "alt": "Coffee table with friends",
+        "srcOriginal": "/assets/privacy-budget/level-05/original.webp",
+        "srcOptionA": "/assets/privacy-budget/level-05/option-a.webp",
+        "srcOptionB": "/assets/privacy-budget/level-05/option-b.webp"
+      },
+      "photoOptionLabels": {
+        "Original": {
+          "title": "Original",
+          "description": "No crop needed; gold path for this safe level."
+        },
+        "Option A": {
+          "title": "Option A",
+          "description": "Blur the banner in the background (optional; not required for gold)."
+        },
+        "Option B": {
+          "title": "Option B",
+          "description": "Crop out the table (optional; not required for gold)."
+        }
+      },
+      "riskZonesOriginal": {},
+      "goldPathSummary": {
+        "audience": ["Friends"],
+        "locationTagOff": true,
+        "captionRule": "keep_or_edit",
+        "captionExamples": ["Grateful for good friends."],
+        "photoOption": "Original",
+        "coachNote": "If players open image edits, A/B are decoys—focus on audience, location, and caption."
+      }
+    },
+    {
+      "id": 6,
+      "slug": "cousins-weekend",
+      "title": "Cousins’ weekend",
+      "riskProfile": "safe",
+      "scenarioDescription": "A family group photo outdoors—warm and shareable. No addresses or readable IDs in frame. Decoys: objects may look like mail or a spelled-out banner—players should learn they aren’t actually readable.",
+      "defaultPost": {
+        "audience": "Public",
+        "locationTagOn": true,
+        "captionMode": "keep",
+        "caption": "Weekend with my people",
+        "photoOption": "Original"
+      },
+      "imageAsset": {
+        "id": "level-06-cousins-weekend",
+        "alt": "Family group outdoors",
+        "srcOriginal": "/assets/privacy-budget/level-06/original.webp",
+        "srcOptionA": "/assets/privacy-budget/level-06/option-a.webp",
+        "srcOptionB": "/assets/privacy-budget/level-06/option-b.webp"
+      },
+      "photoOptionLabels": {
+        "Original": {
+          "title": "Original",
+          "description": "Gold path; no crop required."
+        },
+        "Option A": {
+          "title": "Option A",
+          "description": "Blur the phone (optional)."
+        },
+        "Option B": {
+          "title": "Option B",
+          "description": "Blur the documents (optional)."
+        }
+      },
+      "riskZonesOriginal": {},
+      "goldPathSummary": {
+        "audience": ["Close Friends", "Friends"],
+        "locationTagOff": true,
+        "captionRule": "edit",
+        "captionExamples": ["Weekend with family."],
+        "photoOption": "Original"
+      }
+    },
+    {
+      "id": 7,
+      "slug": "airport-gate",
+      "title": "Airport gate",
+      "riskProfile": "safe",
+      "scenarioDescription": "You’re waiting at a gate with friends. Screens and tags look sensitive, but this frame is designed so nothing is actually readable—the lesson is not to panic-crop; focus on who can see the post and location.",
+      "defaultPost": {
+        "audience": "Public",
+        "locationTagOn": true,
+        "captionMode": "keep",
+        "caption": "Sunday reset with friends.",
+        "captionAlternate": "Travel day with friends.",
+        "photoOption": "Original"
+      },
+      "imageAsset": {
+        "id": "level-07-airport-gate",
+        "alt": "Friends at an airport gate",
+        "srcOriginal": "/assets/privacy-budget/level-07/original.webp",
+        "srcOptionA": "/assets/privacy-budget/level-07/option-a.webp",
+        "srcOptionB": "/assets/privacy-budget/level-07/option-b.webp"
+      },
+      "photoOptionLabels": {
+        "Original": {
+          "title": "Original",
+          "description": "Gold path; avoid unnecessary crops."
+        },
+        "Option A": {
+          "title": "Option A",
+          "description": "Remove the tags (optional)."
+        },
+        "Option B": {
+          "title": "Option B",
+          "description": "Blur the banners behind (optional)."
+        }
+      },
+      "riskZonesOriginal": {},
+      "goldPathSummary": {
+        "audience": ["Friends"],
+        "locationTagOff": true,
+        "captionRule": "keep_or_edit",
+        "captionExamples": ["Chill Sunday.", "Gate vibes."],
+        "photoOption": "Original"
+      }
+    },
+    {
+      "id": 8,
+      "slug": "mirror-checklist",
+      "title": "Mirror checklist",
+      "riskProfile": "dangerous",
+      "scenarioDescription": "A mirror selfie while trying a new outfit. The room includes multiple readable notes and an ID-like tag—high information density in one frame.",
+      "defaultPost": {
+        "audience": "Public",
+        "locationTagOn": true,
+        "captionMode": "keep",
+        "caption": "New look, who dis? :)",
+        "photoOption": "Original"
+      },
+      "imageAsset": {
+        "id": "level-08-mirror-checklist",
+        "alt": "Mirror selfie with notes in room",
+        "srcOriginal": "/assets/privacy-budget/level-08/original.webp",
+        "srcOptionA": "/assets/privacy-budget/level-08/option-a.webp",
+        "srcOptionB": "/assets/privacy-budget/level-08/option-b.webp"
+      },
+      "photoOptionLabels": {
+        "Original": {
+          "title": "Original",
+          "description": "Notes and tags visible."
+        },
+        "Option A": {
+          "title": "Option A",
+          "description": "Crop out the table."
+        },
+        "Option B": {
+          "title": "Option B",
+          "description": "Blur the address (gold path)."
+        }
+      },
+      "riskZonesOriginal": {
+        "Option A": "Crop out the table",
+        "Option B": "Blur the address"
+      },
+      "goldPathSummary": {
+        "audience": ["Close Friends"],
+        "locationTagOff": true,
+        "captionRule": "edit",
+        "captionExamples": ["Liked this outfit today."],
+        "photoOption": "Option B"
+      }
+    },
+    {
+      "id": 9,
+      "slug": "birthday-at-the-door",
+      "title": "Birthday at the door",
+      "riskProfile": "dangerous",
+      "scenarioDescription": "A birthday gathering near a home entrance. The party is shareable, but readable address text on the wall is a strong real-world leak if combined with Public and location tag.",
+      "defaultPost": {
+        "audience": "Public",
+        "locationTagOn": true,
+        "captionMode": "keep",
+        "caption": "Best day ever!!",
+        "photoOption": "Original"
+      },
+      "imageAsset": {
+        "id": "level-09-birthday-at-the-door",
+        "alt": "Birthday gathering near a door with address visible",
+        "srcOriginal": "/assets/privacy-budget/level-09/original.webp",
+        "srcOptionA": "/assets/privacy-budget/level-09/option-a.webp",
+        "srcOptionB": "/assets/privacy-budget/level-09/option-b.webp"
+      },
+      "photoOptionLabels": {
+        "Original": {
+          "title": "Original",
+          "description": "Address text and table context visible."
+        },
+        "Option A": {
+          "title": "Option A",
+          "description": "Blur the address (gold path)."
+        },
+        "Option B": {
+          "title": "Option B",
+          "description": "Crop out the table."
+        }
+      },
+      "riskZonesOriginal": {
+        "Option A": "Blur the address",
+        "Option B": "Crop out the table"
+      },
+      "goldPathSummary": {
+        "audience": ["Friends", "Close Friends"],
+        "locationTagOff": true,
+        "captionRule": "edit",
+        "captionExamples": ["Grateful for today."],
+        "captionCoachNote": "Avoid confirming “here’s my house.”",
+        "photoOption": "Option A"
+      }
+    },
+    {
+      "id": 10,
+      "slug": "night-market",
+      "title": "Night market",
+      "riskProfile": "dangerous",
+      "scenarioDescription": "An evening street-food moment looks fun, but a large readable sign gives exact place and hours—strong context leak if the post is too public with location on.",
+      "defaultPost": {
+        "audience": "Public",
+        "locationTagOn": true,
+        "captionMode": "keep",
+        "caption": "Night market run!",
+        "captionLegacy": "Just arrived home :)",
+        "photoOption": "Original"
+      },
+      "imageAsset": {
+        "id": "level-10-night-market",
+        "alt": "Evening street food / night market",
+        "srcOriginal": "/assets/privacy-budget/level-10/original.webp",
+        "srcOptionA": "/assets/privacy-budget/level-10/option-a.webp",
+        "srcOptionB": "/assets/privacy-budget/level-10/option-b.webp"
+      },
+      "photoOptionLabels": {
+        "Original": {
+          "title": "Original",
+          "description": "Sign with place and hours visible."
+        },
+        "Option A": {
+          "title": "Option A",
+          "description": "Blur night-market address/sign (gold path)."
+        },
+        "Option B": {
+          "title": "Option B",
+          "description": "Blur the menu banner."
+        }
+      },
+      "riskZonesOriginal": {
+        "Option A": "Blur the night market’s address/sign",
+        "Option B": "Blur the menu banner"
+      },
+      "goldPathSummary": {
+        "audience": ["Close Friends"],
+        "locationTagOff": true,
+        "captionRule": "edit",
+        "captionExamples": ["Out for snacks.", "Good food, good night."],
+        "photoOption": "Option A",
+        "coachNote": "Default UI caption uses Night market run! per content doc; captionLegacy is the older line from the doc."
+      }
+    }
+  ]
+}
