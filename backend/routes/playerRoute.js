@@ -3,7 +3,7 @@ import {createPlayer, getLeaderboard, updatePlayer} from "../controllers/playerC
 
 const router = express.Router();
 
-router.post("/leaderboard", getLeaderboard);
+router.get("/leaderboard", getLeaderboard);
 router.post("/", createPlayer);
 router.patch("/:id", updatePlayer);
 

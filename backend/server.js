@@ -2,8 +2,9 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
-import connectDB from './config/db.js';
-import playerRoutes from './routes/playerRoutes.js';
+import connectDB from './lib/db.js';
+import playerRoutes from './routes/playerRoute.js';
+import privacyBudgetRoutes from './routes/privacyBudgetRoute.js';
 
 dotenv.config();
 
@@ -13,7 +14,7 @@ const __dirname = path.resolve();
 
 app.use(cors({
     origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allowedHeaders: ['Content-Type', 'Authorization'],
 
 }));
@@ -22,6 +23,7 @@ app.use(express.json());
 
 //API routes
 app.use("/api/players", playerRoutes);
+app.use("/api/privacy-budget", privacyBudgetRoutes);
 
 const PORT = process.env.PORT || 8000;
 
