@@ -68,10 +68,12 @@ function Leaderboard() {
             </p>
           </div>
           <div className="flex flex-col p-3 gap-2 text-sm sm:text-base">
-            <p>✔ Check multiple clues together</p>
-            <p>✔ Verify photo and profile consistency</p>
-            <p>✔ Spot pressure, DM traps, and off-app moves</p>
-            <p>✔ Choose safety when unsure</p>
+            <p>✔ Privacy comes from multiple choices together.
+            </p>
+            <p>✔ Audience, caption, location, and photo all affect exposure.
+            </p>
+            <p>✔ The best setup depends on the scenario goal</p>
+            <p>✔ You learned to pick a strong balance, not just max privacy.</p>
           </div>
         </div>
       </div>
@@ -85,10 +87,11 @@ function Leaderboard() {
             </p>
           </div>
           <div className="flex flex-col gap-2 p-3 text-sm sm:text-base">
-            <p>Use multiple signals together, not just one clue.</p>
-            <p>New account + low mutuals = extra caution.</p>
-            <p>Pushy DMs/off-app moves are major red flags.</p>
-            <p>When unsure, verify first and protect yourself.</p>
+            <p>Don’t rely on one setting—tune the whole post.</p>
+            <p>Choose privacy that fits the moment and audience.</p>
+            <p>Reduce risky details, but keep enough context.
+            </p>
+            <p>When posting, ask: who sees it and what can they tell?</p>
           </div>
         </div>
       </div>
