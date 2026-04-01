@@ -73,7 +73,13 @@ function FeedbackPopup({ onClose, feedback }) {
                   )}
                   {breakdown &&
                     Object.entries(breakdown).map(([k, v]) => {
-                      if (k === 'weights' || typeof v !== 'number') return null
+                      if (
+                        k === 'weights' ||
+                        k === 'pointsPerSetting' ||
+                        k === 'maxLevelScore' ||
+                        typeof v !== 'number'
+                      )
+                        return null
                       return (
                         <React.Fragment key={k}>
                           <span className='capitalize'>{k.replace(/([A-Z])/g, ' $1')}</span>

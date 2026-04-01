@@ -15,8 +15,12 @@
         "audience": "Public",
         "locationTagOn": true,
         "captionMode": "keep",
-        "caption": "First day energy! So excited :)",
+        "caption": "First day at Riverside High — main entrance selfie!! So hyped :)",
         "photoOption": "Original"
+      },
+      "locationTagDisplay": {
+        "primary": "Riverside High",
+        "subtitle": "Main entrance"
       },
       "imageAsset": {
         "id": "level-01-picture-at-the-gate",
@@ -52,7 +56,7 @@
         "captionExamples": [
           "Excited for today—good vibes only."
         ],
-        "captionCoachNote": "No school name, no “at school / here” anchors.",
+        "captionCoachNote": "Default caption names the school and the entrance—edit so nothing pins you to this place.",
         "photoOption": "Option B",
         "photoPartialCredit": "Option A"
       }
@@ -67,8 +71,12 @@
         "audience": "Public",
         "locationTagOn": true,
         "captionMode": "keep",
-        "caption": "Such a great day out with friends!",
+        "caption": "Spring Fest 2026 with the crew — we basically camped at the main stage all day!",
         "photoOption": "Original"
+      },
+      "locationTagDisplay": {
+        "primary": "Spring Fest 2026",
+        "subtitle": "Main stage area"
       },
       "imageAsset": {
         "id": "level-02-friends-at-the-fair",
@@ -100,6 +108,7 @@
         "locationTagOff": true,
         "captionRule": "edit",
         "captionExamples": ["Fun day with my people."],
+        "captionCoachNote": "Default caption repeats the event name, year, and main stage—edit so the post doesn’t pin time and place.",
         "photoOption": "Option A"
       }
     },
@@ -115,6 +124,10 @@
         "captionMode": "keep",
         "caption": "Finally got her!!",
         "photoOption": "Original"
+      },
+      "locationTagDisplay": {
+        "primary": "City Center Parking",
+        "subtitle": "Riverside (generic metro label)"
       },
       "imageAsset": {
         "id": "level-03-new-wheels",
@@ -159,8 +172,12 @@
         "audience": "Public",
         "locationTagOn": true,
         "captionMode": "keep",
-        "caption": "Practice was intense today!",
+        "caption": "4:30 practice at Riverside Sports Complex — track was brutal. Santos brought it today!",
         "photoOption": "Original"
+      },
+      "locationTagDisplay": {
+        "primary": "Riverside Sports Complex",
+        "subtitle": "Track & field"
       },
       "imageAsset": {
         "id": "level-04-sideline-snap",
@@ -192,6 +209,7 @@
         "locationTagOff": true,
         "captionRule": "edit",
         "captionExamples": ["Good practice today."],
+        "captionCoachNote": "Default caption shouts the time block, venue, and a jersey name—edit to something generic.",
         "photoOption": "Option B"
       }
     },
@@ -207,6 +225,10 @@
         "captionMode": "keep",
         "caption": "Best talks happen over coffee.",
         "photoOption": "Original"
+      },
+      "locationTagDisplay": {
+        "primary": "The Daily Grind",
+        "subtitle": "Downtown (fictional café)"
       },
       "imageAsset": {
         "id": "level-05-coffee-catch-up",
@@ -252,6 +274,10 @@
         "caption": "Weekend with my people",
         "photoOption": "Original"
       },
+      "locationTagDisplay": {
+        "primary": "Oakwood Park",
+        "subtitle": "Picnic hill"
+      },
       "imageAsset": {
         "id": "level-06-cousins-weekend",
         "alt": "Family group outdoors",
@@ -296,6 +322,10 @@
         "captionAlternate": "Travel day with friends.",
         "photoOption": "Original"
       },
+      "locationTagDisplay": {
+        "primary": "Riverside International Airport",
+        "subtitle": "Concourse (no gate number — matches “nothing readable” art)"
+      },
       "imageAsset": {
         "id": "level-07-airport-gate",
         "alt": "Friends at an airport gate",
@@ -336,8 +366,12 @@
         "audience": "Public",
         "locationTagOn": true,
         "captionMode": "keep",
-        "caption": "New look, who dis? :)",
+        "caption": "New fit — mirror pic at my place in Riverside Township. Notes on the mirror are literally my whole week lol",
         "photoOption": "Original"
+      },
+      "locationTagDisplay": {
+        "primary": "Riverside Township",
+        "subtitle": "Near home (neighborhood-level; pairs with in-photo address leak)"
       },
       "imageAsset": {
         "id": "level-08-mirror-checklist",
@@ -369,6 +403,7 @@
         "locationTagOff": true,
         "captionRule": "edit",
         "captionExamples": ["Liked this outfit today."],
+        "captionCoachNote": "Default caption confirms neighborhood + that readable notes are yours—edit so nothing in text stacks on the photo leaks.",
         "photoOption": "Option B"
       }
     },
@@ -384,6 +419,10 @@
         "captionMode": "keep",
         "caption": "Best day ever!!",
         "photoOption": "Original"
+      },
+      "locationTagDisplay": {
+        "primary": "2408 Cypress Ln",
+        "subtitle": "Riverside (strong deliberate leak — matches wall plaque)"
       },
       "imageAsset": {
         "id": "level-09-birthday-at-the-door",
@@ -429,9 +468,13 @@
         "audience": "Public",
         "locationTagOn": true,
         "captionMode": "keep",
-        "caption": "Night market run!",
+        "caption": "At Night Market Gate B — here til 11:30 close! Zone A signs everywhere, you can’t miss this spot.",
         "captionLegacy": "Just arrived home :)",
         "photoOption": "Original"
+      },
+      "locationTagDisplay": {
+        "primary": "Night Market — Gate B",
+        "subtitle": "Open until 11:30 PM (matches Zone A sign)"
       },
       "imageAsset": {
         "id": "level-10-night-market",
@@ -464,7 +507,8 @@
         "captionRule": "edit",
         "captionExamples": ["Out for snacks.", "Good food, good night."],
         "photoOption": "Option A",
-        "coachNote": "Default UI caption uses Night market run! per content doc; captionLegacy is the older line from the doc."
+        "captionCoachNote": "Default caption repeats gate, closing time, and zone text from the scene—edit so the words don’t double the signage.",
+        "coachNote": "captionLegacy is an older default line kept for reference only."
       }
     }
   ]

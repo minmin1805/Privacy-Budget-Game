@@ -3,12 +3,8 @@ import {
     PRIVACY_BUDGET_LEVEL_COUNT,
 } from '../data/privacyBudgetLevelConfig.js';
 
-const WEIGHT = {
-    audience: 25,
-    location: 25,
-    caption: 25,
-    photo: 25,
-};
+/** Max points per setting (audience, location, caption, photo) — full run ceiling = 10 × 400. */
+const POINTS_PER_SETTING = 100;
 
 /** @param {string} a */
 function normAudience(a) {
@@ -38,12 +34,12 @@ function normPhoto(p) {
  * @param {object} captionAi — from gradeCaption (band, reason, …)
  */
 function bandFromCaptionAi(captionAi) {
-    if (!captionAi) return { captionQualityPoints: WEIGHT.caption, note: 'No AI data.' };
+    if (!captionAi) return { captionQualityPoints: POINTS_PER_SETTING, note: 'No AI data.' };
     const b = captionAi.band;
-    if (b === 'safe') return { captionQualityPoints: WEIGHT.caption, note: 'Caption looks appropriately general.' };
+    if (b === 'safe') return { captionQualityPoints: POINTS_PER_SETTING, note: 'Caption looks appropriately general.' };
     if (b === 'okay')
-        return { captionQualityPoints: Math.round(WEIGHT.caption * 0.65), note: captionAi.reason || 'Caption could be tighter.' };
-    return { captionQualityPoints: Math.round(WEIGHT.caption * 0.35), note: captionAi.reason || 'Caption may leak context.' };
+        return { captionQualityPoints: 65, note: captionAi.reason || 'Caption could be tighter.' };
+    return { captionQualityPoints: 35, note: captionAi.reason || 'Caption may leak context.' };
 }
 
 /**
@@ -79,25 +75,29 @@ export function scorePrivacyBudgetLevel(levelId, submission, captionAi) {
 
     let audiencePoints = 0;
     if (gold.audienceGold.includes(audience)) {
-        audiencePoints = WEIGHT.audience;
+        audiencePoints = POINTS_PER_SETTING;
     } else if (audience === 'Public' && gold.audienceGold.includes('Friends')) {
-        audiencePoints = 12;
+        audiencePoints = 48;
     } else if (
         gold.audienceGold.includes('Friends') &&
         audience === 'Close Friends' &&
         gold.audienceGold.includes('Close Friends')
     ) {
-        audiencePoints = WEIGHT.audience;
+        audiencePoints = POINTS_PER_SETTING;
     } else {
-        audiencePoints = Math.max(0, 8);
+        audiencePoints = Math.max(0, 32);
     }
 
-    const locationPoints = gold.locationMustBeOff ? (!locationOn ? WEIGHT.location : 0) : WEIGHT.location;
+    const locationPoints = gold.locationMustBeOff
+        ? !locationOn
+            ? POINTS_PER_SETTING
+            : 0
+        : POINTS_PER_SETTING;
 
     let captionPoints = 0;
     if (gold.captionRule === 'keep_or_edit') {
         if (captionMode === 'keep') {
-            captionPoints = WEIGHT.caption;
+            captionPoints = POINTS_PER_SETTING;
         } else {
             const { captionQualityPoints } = bandFromCaptionAi(captionAi);
             captionPoints = captionQualityPoints;
@@ -113,40 +113,40 @@ export function scorePrivacyBudgetLevel(levelId, submission, captionAi) {
 
     let photoPoints = 0;
     if (gold.photoGold.includes(photo)) {
-        photoPoints = WEIGHT.photo;
+        photoPoints = POINTS_PER_SETTING;
     } else if (gold.photoPartial?.includes(photo)) {
-        photoPoints = Math.round(WEIGHT.photo * 0.55);
+        photoPoints = 55;
     } else if (gold.riskProfile === 'safe' && (photo === 'Option A' || photo === 'Option B')) {
-        photoPoints = 10;
+        photoPoints = 40;
     } else {
-        photoPoints = gold.riskProfile === 'dangerous' && photo === 'Original' ? 5 : 8;
+        photoPoints = gold.riskProfile === 'dangerous' && photo === 'Original' ? 20 : 32;
     }
 
     let basePoints = audiencePoints + locationPoints + captionPoints + photoPoints;
     let bonus = 0;
     let penalty = 0;
 
-    if (basePoints >= 92 && gold.riskProfile === 'dangerous' && gold.photoGold.includes(photo)) {
-        bonus = Math.min(5, 100 - basePoints);
+    if (basePoints >= 368 && gold.riskProfile === 'dangerous' && gold.photoGold.includes(photo)) {
+        bonus = Math.min(20, 400 - basePoints);
     }
     if (audience === 'Public' && gold.locationMustBeOff && locationOn) {
-        penalty += 8;
+        penalty += 32;
     }
 
-    let levelScore = Math.max(0, Math.min(100, basePoints + bonus - penalty));
+    let levelScore = Math.max(0, Math.min(400, basePoints + bonus - penalty));
 
     let feedbackBand = 'okay';
-    if (levelScore >= 80) feedbackBand = 'great';
-    else if (levelScore >= 55) feedbackBand = 'okay';
+    if (levelScore >= 320) feedbackBand = 'great';
+    else if (levelScore >= 220) feedbackBand = 'okay';
     else feedbackBand = 'risky';
 
     const whatWorked = [];
     const tightenNextTime = [];
 
-    if (audiencePoints >= WEIGHT.audience - 1) whatWorked.push('Audience choice matches a safer sharing level.');
+    if (audiencePoints >= POINTS_PER_SETTING - 1) whatWorked.push('Audience choice matches a safer sharing level.');
     else tightenNextTime.push('Tighten who can see this (Friends, Close Friends, or Only Me when appropriate).');
 
-    if (locationPoints >= WEIGHT.location - 1) whatWorked.push('Location tag is off when it should be.');
+    if (locationPoints >= POINTS_PER_SETTING - 1) whatWorked.push('Location tag is off when it should be.');
     else if (locationOn) tightenNextTime.push('Turn off the location tag to reduce where-and-when exposure.');
 
     if (gold.captionRule === 'keep_or_edit') {
@@ -187,7 +187,8 @@ export function scorePrivacyBudgetLevel(levelId, submission, captionAi) {
             locationPoints,
             captionPoints,
             photoPoints,
-            weights: WEIGHT,
+            pointsPerSetting: POINTS_PER_SETTING,
+            maxLevelScore: POINTS_PER_SETTING * 4,
         },
     };
 }

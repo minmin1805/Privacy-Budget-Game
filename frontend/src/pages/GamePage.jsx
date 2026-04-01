@@ -5,9 +5,10 @@ import ImagePickerPopup from '../components/ImagePickerPopup'
 import FeedbackPopup from '../components/FeedbackPopup'
 import { usePrivacyBudget } from '../context/PrivacyBudgetContext'
 import { getLevelAssets, hasOnlyOptionA } from '../utils/levelAssets'
+import { computeLiveMeters } from '../utils/liveMeters'
 import fallbackProfile from '../assets/Photo/GamePage/mockprofile.png'
 import fallbackPost from '../assets/Photo/GamePage/postimage.png'
-import { FaHeart, FaRegCommentDots, FaRegShareSquare, FaRegThumbsUp } from 'react-icons/fa'
+import { FaHeart, FaMapMarkerAlt, FaRegCommentDots, FaRegShareSquare, FaRegThumbsUp } from 'react-icons/fa'
 import { IoShield } from 'react-icons/io5'
 
 const pillBase =
@@ -57,18 +58,21 @@ function AudienceRow({ options, value, onChange }) {
   )
 }
 
-function ScoreCard({ icon, title, score, value = 70 }) {
+function ScoreCard({ icon, title, score, value = 70, hint }) {
   return (
     <div className='bg-[#4860bd] rounded-xl px-4 py-2 text-white shadow-sm'>
-      <div className='flex items-center justify-between'>
-        <div className='flex items-center gap-2'>
-          <span className='text-3xl'>{icon}</span>
-          <h3 className='text-lg md:text-xl font-bold'>{title}</h3>
+      <div className='flex items-center justify-between gap-2'>
+        <div className='flex items-center gap-2 min-w-0'>
+          <span className='text-3xl shrink-0'>{icon}</span>
+          <div className='min-w-0'>
+            <h3 className='text-lg md:text-xl font-bold leading-tight'>{title}</h3>
+            {hint ? <p className='text-xs text-[#dfe5ff] mt-0.5 leading-snug'>{hint}</p> : null}
+          </div>
         </div>
-        <span className='text-3xl md:text-4xl font-bold'>{score}</span>
+        <span className='text-3xl md:text-4xl font-bold shrink-0'>{score}</span>
       </div>
       <div className='mt-2 h-3 bg-[#dfe5ff] rounded-full overflow-hidden'>
-        <div className='h-full bg-white rounded-full' style={{ width: `${value}%` }} />
+        <div className='h-full bg-white rounded-full transition-[width] duration-200' style={{ width: `${value}%` }} />
       </div>
     </div>
   )
@@ -159,12 +163,10 @@ export default function GamePage() {
     postCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  const privacyScoreDisplay =
-    typeof privacyTotalScore === 'number' ? Math.min(100, privacyTotalScore / 10) : 70
-
-  const budgetRemaining = privacyBudgetCompletedAt
-    ? 0
-    : Math.max(0, 11 - currentLevel)
+  const { privacyPct, engagementPct } = useMemo(
+    () => computeLiveMeters(draft, currentLevelConfig),
+    [draft, currentLevelConfig],
+  )
 
   if (!hydrated || !playerId) {
     return (
@@ -176,27 +178,23 @@ export default function GamePage() {
 
   return (
     <div className='min-h-screen bg-[#ebedf2]'>
-      <Header
-        currentLevel={currentLevel}
-        totalLevels={10}
-        totalScore={privacyTotalScore}
-        budgetRemaining={budgetRemaining}
-        budgetTotal={10}
-      />
+      <Header currentLevel={currentLevel} totalLevels={10} totalScore={privacyTotalScore} />
 
       <main className='max-w-[1720px] mx-auto px-4 md:px-6 py-3 mt-5'>
         <section className='grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4'>
           <ScoreCard
             icon={<IoShield />}
-            title='Privacy Score'
-            score={Math.round(privacyScoreDisplay)}
-            value={Math.round(privacyScoreDisplay)}
+            title='Privacy level'
+            score={privacyPct}
+            value={privacyPct}
+            hint='Live preview from your current settings on this scenario.'
           />
           <ScoreCard
             icon={<FaHeart className='text-[#ff4f6f]' />}
-            title='Engagement Score'
-            score={70}
-            value={70}
+            title='Engagement level'
+            score={engagementPct}
+            value={engagementPct}
+            hint='Live preview—more open sharing reads higher; tighter audience reads lower.'
           />
         </section>
 
@@ -250,6 +248,25 @@ export default function GamePage() {
                     ? draft.captionText || '(Your edited caption)'
                     : currentLevelConfig?.defaultPost?.caption ?? draft.captionText}
                 </p>
+                {draft.locationTagOn && currentLevelConfig?.locationTagDisplay?.primary && (
+                  <div className='mt-3 flex items-start gap-2'>
+                    <FaMapMarkerAlt
+                      className='mt-0.5 shrink-0 text-[#3973ba]'
+                      size={16}
+                      aria-hidden
+                    />
+                    <div className='min-w-0'>
+                      <p className='text-sm md:text-base font-semibold text-[#1b2244] leading-snug'>
+                        {currentLevelConfig.locationTagDisplay.primary}
+                      </p>
+                      {currentLevelConfig.locationTagDisplay.subtitle ? (
+                        <p className='text-xs md:text-sm text-[#5d6475] mt-0.5 leading-snug'>
+                          {currentLevelConfig.locationTagDisplay.subtitle}
+                        </p>
+                      ) : null}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className='px-4 py-3 border-t border-[#5d6475] flex items-center justify-around text-[#1b1f32]'>

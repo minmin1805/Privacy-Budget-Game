@@ -4,9 +4,15 @@ import Leaderboard from '../components/Leaderboard'
 import { IoMdDownload } from 'react-icons/io'
 import logo from '../assets/Photo/EndgamePage/logo.png'
 import ScoreDisplay from '../components/ScoreDisplay'
+import { usePrivacyBudget } from '../context/PrivacyBudgetContext'
+import { getSessionTitleFromScore } from '../utils/sessionTitle'
 
 export default function EndgamePage() {
   const navigate = useNavigate()
+  const { privacyTotalScore, privacyBudgetCompletedAt, levels } = usePrivacyBudget()
+  const { title, blurb } = getSessionTitleFromScore(privacyTotalScore)
+  const totalLevels = levels?.length ?? 10
+  const scenariosCleared = privacyBudgetCompletedAt ? totalLevels : null
 
   return (
     <div className="relative z-10 flex flex-col w-full items-center py-6 sm:py-8 bg-[#d2ccfa]" >
@@ -24,7 +30,13 @@ export default function EndgamePage() {
     <div className="flex flex-col lg:flex-row items-center justify-center w-full max-w-6xl px-4 sm:px-6 gap-6 lg:gap-10 mt-4 sm:mt-8">
       {/* Left: score / badge card (styled like ScoreDisplay) */}
       <div className="w-full lg:w-auto flex justify-center h-fit">
-        <ScoreDisplay />
+        <ScoreDisplay
+          title={title}
+          blurb={blurb}
+          totalScore={privacyTotalScore}
+          scenariosCleared={scenariosCleared}
+          scenariosTotal={totalLevels}
+        />
       </div>
 
       {/* Right: leaderboard + learnings, styled like LeaderBoard */}
