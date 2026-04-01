@@ -1,9 +1,13 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import Leaderboard from '../components/Leaderboard'
 import { IoMdDownload } from 'react-icons/io'
 import logo from '../assets/Photo/EndgamePage/logo.png'
 import ScoreDisplay from '../components/ScoreDisplay'
+
 export default function EndgamePage() {
+  const navigate = useNavigate()
+
   return (
     <div className="relative z-10 flex flex-col w-full items-center py-6 sm:py-8 bg-[#d2ccfa]" >
     {/* Logo – same style as EndgamePage */}
