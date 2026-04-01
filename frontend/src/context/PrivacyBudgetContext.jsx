@@ -51,6 +51,8 @@ export function PrivacyBudgetProvider({ children }) {
   const [currentLevel, setCurrentLevel] = useState(1)
   const [draft, setDraft] = useState(() => defaultDraftFromLevel(1))
   const [lastFeedback, setLastFeedback] = useState(null)
+  const [privacyTotalScore, setPrivacyTotalScore] = useState(0)
+  const [privacyBudgetCompletedAt, setPrivacyBudgetCompletedAt] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [hydrated, setHydrated] = useState(false)
@@ -63,12 +65,17 @@ export function PrivacyBudgetProvider({ children }) {
         sessionId: next.sessionId ?? sessionId,
         currentLevel: next.currentLevel ?? currentLevel,
         draft: next.draft ?? draft,
+        privacyTotalScore: next.privacyTotalScore ?? privacyTotalScore,
+        privacyBudgetCompletedAt:
+          next.privacyBudgetCompletedAt !== undefined
+            ? next.privacyBudgetCompletedAt
+            : privacyBudgetCompletedAt,
       }
       if (payload.playerId) {
         sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload))
       }
     },
-    [playerId, username, sessionId, currentLevel, draft],
+    [playerId, username, sessionId, currentLevel, draft, privacyTotalScore, privacyBudgetCompletedAt],
   )
 
   useEffect(() => {
@@ -79,6 +86,10 @@ export function PrivacyBudgetProvider({ children }) {
       setSessionId(s.sessionId ?? null)
       setCurrentLevel(typeof s.currentLevel === 'number' ? s.currentLevel : 1)
       setDraft(s.draft ?? defaultDraftFromLevel(s.currentLevel ?? 1))
+      setPrivacyTotalScore(
+        typeof s.privacyTotalScore === 'number' ? s.privacyTotalScore : 0,
+      )
+      setPrivacyBudgetCompletedAt(s.privacyBudgetCompletedAt ?? null)
     }
     setHydrated(true)
   }, [])
@@ -86,7 +97,17 @@ export function PrivacyBudgetProvider({ children }) {
   useEffect(() => {
     if (!hydrated || !playerId) return
     persist({})
-  }, [hydrated, playerId, username, sessionId, currentLevel, draft, persist])
+  }, [
+    hydrated,
+    playerId,
+    username,
+    sessionId,
+    currentLevel,
+    draft,
+    privacyTotalScore,
+    privacyBudgetCompletedAt,
+    persist,
+  ])
 
   const currentLevelConfig = useMemo(() => {
     return privacyBudgetData.levels.find((l) => l.id === currentLevel) ?? null
@@ -103,6 +124,8 @@ export function PrivacyBudgetProvider({ children }) {
       setSessionId(created.sessionId ?? null)
       setCurrentLevel(1)
       setLastFeedback(null)
+      setPrivacyTotalScore(0)
+      setPrivacyBudgetCompletedAt(null)
       setError(null)
       const d1 = defaultDraftFromLevel(1)
       setDraft(d1)
@@ -114,6 +137,8 @@ export function PrivacyBudgetProvider({ children }) {
           sessionId: created.sessionId ?? null,
           currentLevel: 1,
           draft: d1,
+          privacyTotalScore: 0,
+          privacyBudgetCompletedAt: null,
         }),
       )
     },
@@ -170,6 +195,10 @@ export function PrivacyBudgetProvider({ children }) {
       }
       const data = await updatePlayer(playerId, body)
       setLastFeedback(data.lastPrivacyBudgetFeedback ?? null)
+      if (typeof data.privacyBudgetTotalScore === 'number') {
+        setPrivacyTotalScore(data.privacyBudgetTotalScore)
+      }
+      setPrivacyBudgetCompletedAt(data.privacyBudgetCompletedAt ?? null)
 
       const nextLevel =
         typeof data.privacyBudgetCurrentLevel === 'number'
@@ -203,6 +232,8 @@ export function PrivacyBudgetProvider({ children }) {
     setCurrentLevel(1)
     setDraft(defaultDraftFromLevel(1))
     setLastFeedback(null)
+    setPrivacyTotalScore(0)
+    setPrivacyBudgetCompletedAt(null)
     setError(null)
     setLoading(false)
   }, [])
@@ -219,6 +250,8 @@ export function PrivacyBudgetProvider({ children }) {
       currentLevelConfig,
       draft,
       lastFeedback,
+      privacyTotalScore,
+      privacyBudgetCompletedAt,
       loading,
       error,
       hydrated,
@@ -239,6 +272,8 @@ export function PrivacyBudgetProvider({ children }) {
       currentLevelConfig,
       draft,
       lastFeedback,
+      privacyTotalScore,
+      privacyBudgetCompletedAt,
       loading,
       error,
       hydrated,

@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import ImagePickerPopup from '../components/ImagePickerPopup'
 import FeedbackPopup from '../components/FeedbackPopup'
-import profileImage from '../assets/Photo/GamePage/mockprofile.png'
-import postImage from '../assets/Photo/GamePage/postimage.png'
+import { usePrivacyBudget } from '../context/PrivacyBudgetContext'
+import { getLevelAssets, hasOnlyOptionA } from '../utils/levelAssets'
+import fallbackProfile from '../assets/Photo/GamePage/mockprofile.png'
+import fallbackPost from '../assets/Photo/GamePage/postimage.png'
 import { FaHeart, FaRegCommentDots, FaRegShareSquare, FaRegThumbsUp } from 'react-icons/fa'
 import { IoShield } from 'react-icons/io5'
 
@@ -34,6 +37,26 @@ function ToggleRow({ label, left, right, leftActive = true, onLeftClick, onRight
   )
 }
 
+function AudienceRow({ options, value, onChange }) {
+  return (
+    <div className='rounded-xl border border-[#5f6686] bg-white px-4 py-3'>
+      <p className='text-sm md:text-base font-semibold text-[#1b2244] mb-2'>Audience:</p>
+      <div className='flex flex-wrap gap-2'>
+        {options.map((opt) => (
+          <button
+            key={opt}
+            type='button'
+            onClick={() => onChange(opt)}
+            className={`${pillBase} ${value === opt ? 'bg-[#10bf62] text-[#06122f] border-[#0fa659]' : 'bg-transparent text-[#1b2244] border-[#94a3b8]'}`}
+          >
+            {opt}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function ScoreCard({ icon, title, score, value = 70 }) {
   return (
     <div className='bg-[#4860bd] rounded-xl px-4 py-2 text-white shadow-sm'>
@@ -51,102 +74,195 @@ function ScoreCard({ icon, title, score, value = 70 }) {
   )
 }
 
+function postImageForDraft(draft, assets) {
+  if (draft.photoOption === 'Option A') return assets.optionA ?? assets.post ?? fallbackPost
+  if (draft.photoOption === 'Option B') return assets.optionB ?? assets.post ?? fallbackPost
+  return assets.post ?? fallbackPost
+}
+
 export default function GamePage() {
+  const navigate = useNavigate()
+  const postCardRef = useRef(null)
+
+  const {
+    playerId,
+    username,
+    currentLevel,
+    currentLevelConfig,
+    draft,
+    updateDraft,
+    submitLevel,
+    nextLevel,
+    lastFeedback,
+    privacyTotalScore,
+    privacyBudgetCompletedAt,
+    audienceOptions,
+    loading,
+    error,
+    hydrated,
+  } = usePrivacyBudget()
+
   const [isImagePickerOpen, setIsImagePickerOpen] = useState(false)
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false)
-  const [photoCropMode, setPhotoCropMode] = useState('Original')
-  const [selectedImageOption, setSelectedImageOption] = useState(null)
+  const [pendingNavigateEndgame, setPendingNavigateEndgame] = useState(false)
 
-  const openImagePicker = () => {
-    setIsImagePickerOpen(true)
-  }
+  useEffect(() => {
+    if (!hydrated) return
+    if (!playerId) {
+      navigate('/welcome', { replace: true })
+    }
+  }, [hydrated, playerId, navigate])
 
-  const closeImagePicker = () => {
-    setIsImagePickerOpen(false)
-  }
+  const assets = useMemo(() => getLevelAssets(currentLevel), [currentLevel])
+  const singleOptionOnly = useMemo(() => hasOnlyOptionA(currentLevel), [currentLevel])
+
+  const profileSrc = assets.profile ?? fallbackProfile
+  const postSrc = useMemo(() => postImageForDraft(draft, assets), [draft, assets])
+
+  const photoLabels = currentLevelConfig?.photoOptionLabels ?? {}
+  const optionATitle = photoLabels['Option A']?.title ?? 'Option A'
+  const optionBTitle = photoLabels['Option B']?.title ?? 'Option B'
+
+  const openImagePicker = () => setIsImagePickerOpen(true)
+  const closeImagePicker = () => setIsImagePickerOpen(false)
 
   const handleImageSubmit = (pickedOption) => {
-    setSelectedImageOption(pickedOption)
-    setPhotoCropMode('Crop/Blur Image')
+    updateDraft({ photoOption: pickedOption })
     setIsImagePickerOpen(false)
   }
 
   const handleChooseOriginal = () => {
-    setPhotoCropMode('Original')
-    setSelectedImageOption(null)
+    updateDraft({ photoOption: 'Original' })
   }
 
-  const openFeedbackPopup = () => {
-    setIsFeedbackOpen(true)
+  const handlePostNow = async () => {
+    try {
+      const data = await submitLevel()
+      setPendingNavigateEndgame(Boolean(data.privacyBudgetCompletedAt))
+      setIsFeedbackOpen(true)
+    } catch {
+      // error surfaced via context
+    }
   }
 
-  const closeFeedbackPopup = () => {
+  const handleFeedbackNext = useCallback(() => {
+    const goEnd = pendingNavigateEndgame
     setIsFeedbackOpen(false)
+    setPendingNavigateEndgame(false)
+    nextLevel()
+    if (goEnd) {
+      navigate('/endgame')
+    }
+  }, [pendingNavigateEndgame, nextLevel, navigate])
+
+  const scrollToPreview = () => {
+    postCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  const privacyScoreDisplay =
+    typeof privacyTotalScore === 'number' ? Math.min(100, privacyTotalScore / 10) : 70
+
+  const budgetRemaining = privacyBudgetCompletedAt
+    ? 0
+    : Math.max(0, 11 - currentLevel)
+
+  if (!hydrated || !playerId) {
+    return (
+      <div className='min-h-screen bg-[#ebedf2] flex items-center justify-center text-[#1b2244]'>
+        Loading…
+      </div>
+    )
   }
 
   return (
     <div className='min-h-screen bg-[#ebedf2]'>
-      <Header />
+      <Header
+        currentLevel={currentLevel}
+        totalLevels={10}
+        totalScore={privacyTotalScore}
+        budgetRemaining={budgetRemaining}
+        budgetTotal={10}
+      />
 
       <main className='max-w-[1720px] mx-auto px-4 md:px-6 py-3 mt-5'>
         <section className='grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4'>
-          <ScoreCard icon={<IoShield />} title='Privacy Score' score={70} value={70} />
-          <ScoreCard icon={<FaHeart className='text-[#ff4f6f]' />} title='Engagement Score' score={70} value={70} />
+          <ScoreCard
+            icon={<IoShield />}
+            title='Privacy Score'
+            score={Math.round(privacyScoreDisplay)}
+            value={Math.round(privacyScoreDisplay)}
+          />
+          <ScoreCard
+            icon={<FaHeart className='text-[#ff4f6f]' />}
+            title='Engagement Score'
+            score={70}
+            value={70}
+          />
         </section>
 
         <section className='grid grid-cols-1 xl:grid-cols-[2fr_1fr] gap-4 mt-7'>
           <div className='space-y-3'>
             <article className='rounded-lg border border-[#373a47] bg-white px-4 py-3'>
-              <h2 className='text-3xl md:text-4xl font-bold text-[#1b2244] leading-tight'>
-                Scenario: Team Photo After Practice
+              <h2 className='text-2xl md:text-4xl font-bold text-[#1b2244] leading-tight'>
+                Scenario: {currentLevelConfig?.title ?? `Level ${currentLevel}`}
               </h2>
               <hr className='my-2 border-[#5d6475]' />
               <p className='text-lg md:text-[20px] text-[#222639] leading-snug'>
-                Alex wants to post a photo taken outside school. Not everything in the frame is equally meant for everyone
+                {currentLevelConfig?.scenarioDescription ?? ''}
               </p>
             </article>
 
-            <article className='rounded-lg border border-[#373a47] bg-white overflow-hidden'>
+            <article ref={postCardRef} className='rounded-lg border border-[#373a47] bg-white overflow-hidden'>
               <div className='px-4 py-3'>
                 <h2 className='text-xl md:text-[32px] font-bold text-[#1b2244] leading-tight'>Your New Post</h2>
                 <hr className='my-2 border-[#5d6475]' />
 
                 <div className='flex items-center justify-between gap-3 mb-3'>
                   <div className='flex items-center gap-3'>
-                    <img src={profileImage} alt='Profile' className='w-12 h-12 md:w-14 md:h-14 rounded-full object-cover' />
+                    <img
+                      src={profileSrc}
+                      alt='Profile'
+                      className='w-12 h-12 md:w-14 md:h-14 rounded-full object-cover'
+                    />
                     <div>
-                      <p className='font-bold text-sm md:text-base text-[#161a2d]'>Alex_132</p>
-                      <p className='text-[#3973ba] text-xs md:text-sm'>Riverdale High School</p>
+                      <p className='font-bold text-sm md:text-base text-[#161a2d]'>{username || 'Player'}</p>
+                      <p className='text-[#3973ba] text-xs md:text-sm'>Privacy Budget</p>
                     </div>
                   </div>
                   <div className='flex items-center gap-2'>
                     <span className='text-md md:text-lg text-[#161a2d]'>Audience:</span>
-                    <span className='px-4 py-1 rounded-lg bg-[#1f7dff] text-white text-md md:text-lg font-semibold'>
-                      Public
+                    <span className='px-4 py-1 rounded-lg bg-[#1f7dff] text-white text-sm md:text-lg font-semibold max-w-[140px] truncate'>
+                      {draft.audience}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <img src={postImage} alt='Post content' className='w-full h-[250px] md:h-[320px] object-cover border-y border-[#404454]' />
+              <img
+                src={postSrc}
+                alt='Post content'
+                className='w-full h-[250px] md:h-[320px] object-cover border-y border-[#404454]'
+              />
 
               <div className='px-4 py-3'>
                 <p className='text-base md:text-[24px] leading-tight text-[#1b1e2d]'>
-                  Hanging out at my school!! <span className='text-[#2f6dc9] font-semibold'>#SchoolLife</span>
+                  {draft.captionMode === 'edit'
+                    ? draft.captionText || '(Your edited caption)'
+                    : currentLevelConfig?.defaultPost?.caption ?? draft.captionText}
                 </p>
               </div>
 
               <div className='px-4 py-3 border-t border-[#5d6475] flex items-center justify-around text-[#1b1f32]'>
-                <button className='flex items-center gap-2 text-lg md:text-xl'>
-                  <FaRegThumbsUp size={20}/>
+                <button type='button' className='flex items-center gap-2 text-lg md:text-xl'>
+                  <FaRegThumbsUp size={20} />
                   <span>Like</span>
                 </button>
-                <button className='flex items-center gap-2 text-lg md:text-xl'>
-                  <FaRegCommentDots size={20}/>
+                <button type='button' className='flex items-center gap-2 text-lg md:text-xl'>
+                  <FaRegCommentDots size={20} />
                   <span>Comment</span>
                 </button>
-                <button className='flex items-center gap-2 text-lg md:text-xl'>
-                  <FaRegShareSquare size={20}/>
+                <button type='button' className='flex items-center gap-2 text-lg md:text-xl'>
+                  <FaRegShareSquare size={20} />
                   <span>Share</span>
                 </button>
               </div>
@@ -155,40 +271,77 @@ export default function GamePage() {
 
           <aside className='rounded-3xl border border-[#66709b] bg-[#dfe4f4] overflow-hidden h-fit mt-15'>
             <div className='bg-[#4860bd] px-5 py-3'>
-              <h2 className='text-white text-3xl md:text-4xl font-bold leading-[0.95]'>Adjust Setting Here:</h2>
+              <h2 className='text-white text-2xl md:text-4xl font-bold leading-[0.95]'>Adjust Setting Here:</h2>
             </div>
 
             <div className='p-3 space-y-2.5'>
-              <ToggleRow label='Audience:' left='Public' right='Friends' leftActive />
-              <ToggleRow label='Location Tag:' left='On' right='Off' leftActive />
-              <ToggleRow label='Caption Detail:' left='Keep' right='Edit' leftActive />
+              {error && (
+                <p className='text-sm text-red-600 font-medium bg-red-50 border border-red-200 rounded-lg px-2 py-1'>
+                  {error}
+                </p>
+              )}
+
+              <AudienceRow
+                options={audienceOptions}
+                value={draft.audience}
+                onChange={(audience) => updateDraft({ audience })}
+              />
+
+              <ToggleRow
+                label='Location Tag:'
+                left='On'
+                right='Off'
+                leftActive={draft.locationTagOn}
+                onLeftClick={() => updateDraft({ locationTagOn: true })}
+                onRightClick={() => updateDraft({ locationTagOn: false })}
+              />
+
+              <ToggleRow
+                label='Caption Detail:'
+                left='Keep'
+                right='Edit'
+                leftActive={draft.captionMode === 'keep'}
+                onLeftClick={() => updateDraft({ captionMode: 'keep' })}
+                onRightClick={() => updateDraft({ captionMode: 'edit' })}
+              />
+
+              {draft.captionMode === 'edit' && (
+                <textarea
+                  value={draft.captionText}
+                  onChange={(e) => updateDraft({ captionText: e.target.value })}
+                  rows={3}
+                  className='w-full rounded-lg border-2 border-[#5f6686] px-3 py-2 text-sm text-[#1b2244]'
+                  placeholder='Write your caption…'
+                />
+              )}
+
               <ToggleRow
                 label='Photo Crop:'
                 left='Original'
                 right='Crop/Blur Image'
-                leftActive={photoCropMode === 'Original'}
+                leftActive={draft.photoOption === 'Original'}
                 onLeftClick={handleChooseOriginal}
                 onRightClick={openImagePicker}
               />
 
-              {photoCropMode === 'Crop/Blur Image' && selectedImageOption && (
-                <p className='text-xs text-[#1b2244] font-medium'>
-                  Selected image version: {selectedImageOption}
-                </p>
+              {draft.photoOption !== 'Original' && (
+                <p className='text-xs text-[#1b2244] font-medium'>Selected: {draft.photoOption}</p>
               )}
 
-              <button className='w-full py-2.5 mt-1 rounded-lg text-lg md:text-xl font-bold text-white bg-[#79a7e8] border border-[#3e5a96]'>
+              <button
+                type='button'
+                onClick={scrollToPreview}
+                className='w-full py-2.5 mt-1 rounded-lg text-lg md:text-xl font-bold text-white bg-[#79a7e8] border border-[#3e5a96]'
+              >
                 Show post preview
-              </button>
-              <button className='w-full py-2.5 rounded-lg text-lg md:text-xl font-bold text-white bg-[#2f79df] border border-[#234f92]'>
-                Post Now
               </button>
               <button
                 type='button'
-                onClick={openFeedbackPopup}
-                className='w-full py-2.5 rounded-lg text-sm md:text-base font-semibold text-[#1f356f] bg-white border border-[#5f6686] hover:bg-[#f5f7ff]'
+                onClick={handlePostNow}
+                disabled={loading || Boolean(privacyBudgetCompletedAt)}
+                className='w-full py-2.5 rounded-lg text-lg md:text-xl font-bold text-white bg-[#2f79df] border border-[#234f92] disabled:opacity-50 disabled:cursor-not-allowed'
               >
-                Toggle FeedbackPopup (Mock)
+                {loading ? 'Posting…' : privacyBudgetCompletedAt ? 'Session complete' : 'Post Now'}
               </button>
             </div>
           </aside>
@@ -199,10 +352,17 @@ export default function GamePage() {
         <ImagePickerPopup
           onClose={closeImagePicker}
           onSubmit={handleImageSubmit}
+          optionAUrl={assets.optionA}
+          optionBUrl={assets.optionB}
+          optionATitle={optionATitle}
+          optionBTitle={optionBTitle}
+          singleOptionOnly={singleOptionOnly}
         />
       )}
 
-      {isFeedbackOpen && <FeedbackPopup onClose={closeFeedbackPopup} />}
+      {isFeedbackOpen && (
+        <FeedbackPopup feedback={lastFeedback} onClose={handleFeedbackNext} />
+      )}
     </div>
   )
 }
