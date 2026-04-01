@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { usePrivacyBudget } from '../context/PrivacyBudgetContext'
 import { HiOutlineDocumentMagnifyingGlass } from 'react-icons/hi2'
 import { GiReceiveMoney } from 'react-icons/gi'
 import { FaRegThumbsUp } from 'react-icons/fa'
@@ -13,9 +14,20 @@ const BTN = '#007BFF'
 function WelcomePage() {
   const navigate = useNavigate()
   const [name, setName] = useState('')
+  const { createPlayerAndRegister, loading, error, setError } = usePrivacyBudget()
 
-  const handleBegin = () => {
-    navigate('/instruction')
+  const handleBegin = async () => {
+    setError(null)
+    if (!name.trim()) {
+      setError('Please enter your name.')
+      return
+    }
+    try {
+      await createPlayerAndRegister(name)
+      navigate('/instruction')
+    } catch {
+      // error message already set in context
+    }
   }
 
   return (
@@ -109,13 +121,20 @@ function WelcomePage() {
           </div>
         </div>
 
+        {error && (
+          <p className="text-center text-sm text-red-600 font-medium" role="alert">
+            {error}
+          </p>
+        )}
+
         <button
           type="button"
           onClick={handleBegin}
-          className="w-full sm:w-auto min-w-[140px] mx-auto rounded-full py-3 px-10 text-base font-bold text-white shadow-md transition hover:brightness-110 active:scale-[0.98]"
+          disabled={loading}
+          className="w-full sm:w-auto min-w-[140px] mx-auto rounded-full py-3 px-10 text-base font-bold text-white shadow-md transition hover:brightness-110 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
           style={{ backgroundColor: BTN }}
         >
-          Begin
+          {loading ? 'Starting…' : 'Begin'}
         </button>
       </div>
     </div>
