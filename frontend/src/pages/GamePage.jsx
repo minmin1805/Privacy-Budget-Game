@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Header from '../components/Header'
 import ImagePickerPopup from '../components/ImagePickerPopup'
+import FeedbackPopup from '../components/FeedbackPopup'
 import profileImage from '../assets/Photo/GamePage/mockprofile.png'
 import postImage from '../assets/Photo/GamePage/postimage.png'
 import { FaHeart, FaRegCommentDots, FaRegShareSquare, FaRegThumbsUp } from 'react-icons/fa'
@@ -52,6 +53,7 @@ function ScoreCard({ icon, title, score, value = 70 }) {
 
 export default function GamePage() {
   const [isImagePickerOpen, setIsImagePickerOpen] = useState(false)
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false)
   const [photoCropMode, setPhotoCropMode] = useState('Original')
   const [selectedImageOption, setSelectedImageOption] = useState(null)
 
@@ -72,6 +74,14 @@ export default function GamePage() {
   const handleChooseOriginal = () => {
     setPhotoCropMode('Original')
     setSelectedImageOption(null)
+  }
+
+  const openFeedbackPopup = () => {
+    setIsFeedbackOpen(true)
+  }
+
+  const closeFeedbackPopup = () => {
+    setIsFeedbackOpen(false)
   }
 
   return (
@@ -173,6 +183,13 @@ export default function GamePage() {
               <button className='w-full py-2.5 rounded-lg text-lg md:text-xl font-bold text-white bg-[#2f79df] border border-[#234f92]'>
                 Post Now
               </button>
+              <button
+                type='button'
+                onClick={openFeedbackPopup}
+                className='w-full py-2.5 rounded-lg text-sm md:text-base font-semibold text-[#1f356f] bg-white border border-[#5f6686] hover:bg-[#f5f7ff]'
+              >
+                Toggle FeedbackPopup (Mock)
+              </button>
             </div>
           </aside>
         </section>
@@ -184,6 +201,8 @@ export default function GamePage() {
           onSubmit={handleImageSubmit}
         />
       )}
+
+      {isFeedbackOpen && <FeedbackPopup onClose={closeFeedbackPopup} />}
     </div>
   )
 }
