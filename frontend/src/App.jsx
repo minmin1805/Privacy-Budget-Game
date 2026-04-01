@@ -1,14 +1,24 @@
 import { useState } from 'react'
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import ContentWarningPage from './pages/ContentWarningPage'
+import WelcomePage from './pages/WelcomePage'
+import InstructionPage from './pages/InstructionPage'
+import GamePage from './pages/GamePage'
+import EndgamePage from './pages/EndgamePage'
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <div className='flex items-center justify-center h-screen w-screen'>
-      <h1 className="text-3xl font-bold underline text-red-500">
-        Hello world!
-      </h1>
-    </div>
+    <>
+    <Router>
+    <Routes>
+      <Route path='/' element={<ContentWarningPage/>}/>
+      <Route path='/welcome' element={<WelcomePage/>}/>
+      <Route path='/instruction' element={<InstructionPage/>}/>
+      <Route path='/game' element={<GamePage/>}/>
+      <Route path='/endgame' element={<EndgamePage/>}/>
+    </Routes>
+    </Router>
+    </>
   )
 }
 
