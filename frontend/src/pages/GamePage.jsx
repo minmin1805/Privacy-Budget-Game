@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../components/Header'
+import ImagePickerPopup from '../components/ImagePickerPopup'
 import profileImage from '../assets/Photo/GamePage/mockprofile.png'
 import postImage from '../assets/Photo/GamePage/postimage.png'
 import { FaHeart, FaRegCommentDots, FaRegShareSquare, FaRegThumbsUp } from 'react-icons/fa'
@@ -8,15 +9,23 @@ import { IoShield } from 'react-icons/io5'
 const pillBase =
   'px-3 py-1.5 text-xs font-semibold rounded-md border transition-colors duration-200'
 
-function ToggleRow({ label, left, right, leftActive = true }) {
+function ToggleRow({ label, left, right, leftActive = true, onLeftClick, onRightClick }) {
   return (
     <div className='rounded-xl border border-[#5f6686] bg-white px-4 py-3 flex items-center justify-between gap-4'>
       <span className='text-sm md:text-base font-semibold text-[#1b2244]'>{label}</span>
       <div className='rounded-md bg-[#e8ebfa] p-1 flex items-center'>
-        <button className={`${pillBase} ${leftActive ? 'bg-[#10bf62] text-[#06122f] border-[#0fa659]' : 'bg-transparent text-[#1b2244] border-transparent'}`}>
+        <button
+          type='button'
+          onClick={onLeftClick}
+          className={`${pillBase} ${leftActive ? 'bg-[#10bf62] text-[#06122f] border-[#0fa659]' : 'bg-transparent text-[#1b2244] border-transparent'}`}
+        >
           {left}
         </button>
-        <button className={`${pillBase} ${!leftActive ? 'bg-[#10bf62] text-[#06122f] border-[#0fa659]' : 'bg-transparent text-[#1b2244] border-transparent'}`}>
+        <button
+          type='button'
+          onClick={onRightClick}
+          className={`${pillBase} ${!leftActive ? 'bg-[#10bf62] text-[#06122f] border-[#0fa659]' : 'bg-transparent text-[#1b2244] border-transparent'}`}
+        >
           {right}
         </button>
       </div>
@@ -42,6 +51,29 @@ function ScoreCard({ icon, title, score, value = 70 }) {
 }
 
 export default function GamePage() {
+  const [isImagePickerOpen, setIsImagePickerOpen] = useState(false)
+  const [photoCropMode, setPhotoCropMode] = useState('Original')
+  const [selectedImageOption, setSelectedImageOption] = useState(null)
+
+  const openImagePicker = () => {
+    setIsImagePickerOpen(true)
+  }
+
+  const closeImagePicker = () => {
+    setIsImagePickerOpen(false)
+  }
+
+  const handleImageSubmit = (pickedOption) => {
+    setSelectedImageOption(pickedOption)
+    setPhotoCropMode('Crop/Blur Image')
+    setIsImagePickerOpen(false)
+  }
+
+  const handleChooseOriginal = () => {
+    setPhotoCropMode('Original')
+    setSelectedImageOption(null)
+  }
+
   return (
     <div className='min-h-screen bg-[#ebedf2]'>
       <Header />
@@ -55,7 +87,7 @@ export default function GamePage() {
         <section className='grid grid-cols-1 xl:grid-cols-[2fr_1fr] gap-4 mt-7'>
           <div className='space-y-3'>
             <article className='rounded-lg border border-[#373a47] bg-white px-4 py-3'>
-              <h2 className='text-3xl md:text-[xl] font-bold text-[#1b2244] leading-tight'>
+              <h2 className='text-3xl md:text-4xl font-bold text-[#1b2244] leading-tight'>
                 Scenario: Team Photo After Practice
               </h2>
               <hr className='my-2 border-[#5d6475]' />
@@ -113,14 +145,27 @@ export default function GamePage() {
 
           <aside className='rounded-3xl border border-[#66709b] bg-[#dfe4f4] overflow-hidden h-fit mt-15'>
             <div className='bg-[#4860bd] px-5 py-3'>
-              <h2 className='text-white text-3xl md:text-[2xl] font-bold leading-[0.95]'>Adjust Setting Here:</h2>
+              <h2 className='text-white text-3xl md:text-4xl font-bold leading-[0.95]'>Adjust Setting Here:</h2>
             </div>
 
             <div className='p-3 space-y-2.5'>
               <ToggleRow label='Audience:' left='Public' right='Friends' leftActive />
               <ToggleRow label='Location Tag:' left='On' right='Off' leftActive />
               <ToggleRow label='Caption Detail:' left='Keep' right='Edit' leftActive />
-              <ToggleRow label='Photo Crop:' left='Original' right='Crop/Blur Image' leftActive />
+              <ToggleRow
+                label='Photo Crop:'
+                left='Original'
+                right='Crop/Blur Image'
+                leftActive={photoCropMode === 'Original'}
+                onLeftClick={handleChooseOriginal}
+                onRightClick={openImagePicker}
+              />
+
+              {photoCropMode === 'Crop/Blur Image' && selectedImageOption && (
+                <p className='text-xs text-[#1b2244] font-medium'>
+                  Selected image version: {selectedImageOption}
+                </p>
+              )}
 
               <button className='w-full py-2.5 mt-1 rounded-lg text-lg md:text-xl font-bold text-white bg-[#79a7e8] border border-[#3e5a96]'>
                 Show post preview
@@ -132,6 +177,13 @@ export default function GamePage() {
           </aside>
         </section>
       </main>
+
+      {isImagePickerOpen && (
+        <ImagePickerPopup
+          onClose={closeImagePicker}
+          onSubmit={handleImageSubmit}
+        />
+      )}
     </div>
   )
 }
