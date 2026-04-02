@@ -40,7 +40,7 @@ export const PRIVACY_BUDGET_LEVEL_GOLD = {
         audienceGold: ['Friends', 'Close Friends'],
         locationMustBeOff: false,
         locationMustBeOn: true,
-        captionRule: 'edit',
+        captionRule: 'keep_or_edit',
         photoGold: ['Option A'],
         riskProfile: 'dangerous',
     },

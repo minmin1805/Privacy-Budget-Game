@@ -52,6 +52,8 @@ export function computeLiveMeters(draft, levelConfig) {
   }
 
   const dangerous = levelConfig?.riskProfile === 'dangerous'
+  const captionRuleGold = gold.captionRule
+  const keepCaptionOk = captionRuleGold === 'keep_or_edit'
 
   const captionTrim = (draft.captionText ?? '').trim()
   const hasCaption = captionTrim.length > 0
@@ -62,6 +64,9 @@ export function computeLiveMeters(draft, levelConfig) {
     if (draft.captionMode === 'edit') {
       capPrivacy = hasCaption ? 84 : 72
       capEngagement = hasCaption ? 62 : 48
+    } else if (keepCaptionOk) {
+      capPrivacy = 82
+      capEngagement = 62
     } else {
       capPrivacy = 36
       capEngagement = 60

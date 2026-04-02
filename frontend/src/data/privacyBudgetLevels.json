@@ -160,9 +160,10 @@
       "goldPathSummary": {
         "audience": ["Friends", "Close Friends"],
         "locationTagOn": true,
-        "captionRule": "edit",
-        "captionExamples": ["So happy with my new ride."],
-        "photoOption": "Option A"
+        "captionRule": "keep_or_edit",
+        "captionExamples": ["Finally got her!!", "So happy with my new ride."],
+        "photoOption": "Option A",
+        "coachNote": "Default caption is already fine—keeping it is OK. Edit only if you want a different tone."
       }
     },
     {
