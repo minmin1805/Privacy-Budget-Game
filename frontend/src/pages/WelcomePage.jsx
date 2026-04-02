@@ -40,10 +40,10 @@ function WelcomePage() {
         <img
           src={logo}
           alt="Privacy Budget"
-          className="w-[70%] h-auto object-contain mb-5"
+          className="w-[70%] h-auto object-contain mb-5 mt-20"
         />
         <p
-          className="text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase mb-3"
+          className="text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase mb-3 mt-3"
           style={{ color: NAVY }}
         >
           CHOICE-BASED PRACTICE
