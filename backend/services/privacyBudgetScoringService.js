@@ -88,11 +88,14 @@ export function scorePrivacyBudgetLevel(levelId, submission, captionAi) {
         audiencePoints = Math.max(0, 32);
     }
 
-    const locationPoints = gold.locationMustBeOff
-        ? !locationOn
-            ? POINTS_PER_SETTING
-            : 0
-        : POINTS_PER_SETTING;
+    let locationPoints = 0;
+    if (gold.locationMustBeOn) {
+        locationPoints = locationOn ? POINTS_PER_SETTING : 0;
+    } else if (gold.locationMustBeOff) {
+        locationPoints = !locationOn ? POINTS_PER_SETTING : 0;
+    } else {
+        locationPoints = POINTS_PER_SETTING;
+    }
 
     let captionPoints = 0;
     if (gold.captionRule === 'keep_or_edit') {
@@ -132,6 +135,9 @@ export function scorePrivacyBudgetLevel(levelId, submission, captionAi) {
     if (audience === 'Public' && gold.locationMustBeOff && locationOn) {
         penalty += 32;
     }
+    if (audience === 'Public' && gold.locationMustBeOn && !locationOn) {
+        penalty += 20;
+    }
 
     let levelScore = Math.max(0, Math.min(400, basePoints + bonus - penalty));
 
@@ -146,8 +152,19 @@ export function scorePrivacyBudgetLevel(levelId, submission, captionAi) {
     if (audiencePoints >= POINTS_PER_SETTING - 1) whatWorked.push('Audience choice matches a safer sharing level.');
     else tightenNextTime.push('Tighten who can see this (Friends, Close Friends, or Only Me when appropriate).');
 
-    if (locationPoints >= POINTS_PER_SETTING - 1) whatWorked.push('Location tag is off when it should be.');
-    else if (locationOn) tightenNextTime.push('Turn off the location tag to reduce where-and-when exposure.');
+    if (gold.locationMustBeOn) {
+        if (locationPoints >= POINTS_PER_SETTING - 1) {
+            whatWorked.push('Broad location tag on—appropriate for this scenario.');
+        } else {
+            tightenNextTime.push('Use a broad city/region tag (on), not your exact address or venue pin.');
+        }
+    } else if (gold.locationMustBeOff) {
+        if (locationPoints >= POINTS_PER_SETTING - 1) {
+            whatWorked.push('Location tag is off when it should be.');
+        } else if (locationOn) {
+            tightenNextTime.push('Turn off the location tag to reduce where-and-when exposure.');
+        }
+    }
 
     if (gold.captionRule === 'keep_or_edit') {
         if (captionMode === 'keep') {
@@ -169,7 +186,12 @@ export function scorePrivacyBudgetLevel(levelId, submission, captionAi) {
     else if (gold.riskProfile === 'safe') tightenNextTime.push('On this level, the original photo was enough—extra edits were unnecessary.');
     else tightenNextTime.push('Pick the crop/blur option that hides banners, plates, or faces in the risk zones.');
 
-    const suggestedSetup = `Target for this level: ${gold.audienceGold.join(' or ')} audience, location off, ${
+    const locHint = gold.locationMustBeOn
+        ? 'broad location tag on (city/region)'
+        : gold.locationMustBeOff
+          ? 'location off'
+          : 'location as appropriate';
+    const suggestedSetup = `Target for this level: ${gold.audienceGold.join(' or ')} audience, ${locHint}, ${
         gold.captionRule === 'keep_or_edit' ? 'caption kept simple or edited' : 'edited caption'
     }, photo: ${gold.photoGold.join(' or ')}.`;
 

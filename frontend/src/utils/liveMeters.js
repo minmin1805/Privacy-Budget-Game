@@ -35,8 +35,21 @@ export function computeLiveMeters(draft, levelConfig) {
   const audiencePriv = AUDIENCE_PRIVACY[aud] ?? 52
 
   const locOn = Boolean(draft.locationTagOn)
-  const locPrivacy = locOn ? 30 : 96
-  const locEngagement = locOn ? 64 : 44
+  const gold = levelConfig?.goldPathSummary ?? {}
+  const wantsBroadLocationOn = gold.locationTagOn === true
+  const wantsLocationOff = gold.locationTagOff === true
+  let locPrivacy
+  let locEngagement
+  if (wantsBroadLocationOn) {
+    locPrivacy = locOn ? 88 : 38
+    locEngagement = locOn ? 62 : 48
+  } else if (wantsLocationOff) {
+    locPrivacy = locOn ? 30 : 96
+    locEngagement = locOn ? 64 : 44
+  } else {
+    locPrivacy = locOn ? 55 : 78
+    locEngagement = locOn ? 58 : 50
+  }
 
   const dangerous = levelConfig?.riskProfile === 'dangerous'
 

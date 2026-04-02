@@ -277,7 +277,9 @@ export default function GamePage() {
                       className='w-12 h-12 md:w-14 md:h-14 rounded-full object-cover'
                     />
                     <div>
-                      <p className='font-bold text-sm md:text-base text-[#161a2d]'>{username || 'Player'}</p>
+                      <p className='font-bold text-sm md:text-base text-[#161a2d]'>
+                        {currentLevelConfig?.profileName?.trim() || username || 'Player'}
+                      </p>
                       <p className='text-[#3973ba] text-xs md:text-sm'>Privacy Budget</p>
                     </div>
                   </div>

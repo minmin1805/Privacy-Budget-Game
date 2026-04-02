@@ -10,7 +10,8 @@
 /**
  * @typedef {Object} LevelGold
  * @property {Audience[]} audienceGold
- * @property {boolean} locationMustBeOff
+ * @property {boolean} locationMustBeOff — full points when location tag is off (precise leaks)
+ * @property {boolean} [locationMustBeOn] — full points when tag is on (broad city/region only; mutually exclusive with locationMustBeOff)
  * @property {'edit'|'keep_or_edit'} captionRule
  * @property {PhotoOption[]} photoGold
  * @property {PhotoOption[]} [photoPartial]
@@ -29,14 +30,16 @@ export const PRIVACY_BUDGET_LEVEL_GOLD = {
     },
     2: {
         audienceGold: ['Friends'],
-        locationMustBeOff: true,
+        locationMustBeOff: false,
+        locationMustBeOn: true,
         captionRule: 'edit',
         photoGold: ['Option A'],
         riskProfile: 'dangerous',
     },
     3: {
         audienceGold: ['Friends', 'Close Friends'],
-        locationMustBeOff: true,
+        locationMustBeOff: false,
+        locationMustBeOn: true,
         captionRule: 'edit',
         photoGold: ['Option A'],
         riskProfile: 'dangerous',
@@ -50,7 +53,8 @@ export const PRIVACY_BUDGET_LEVEL_GOLD = {
     },
     5: {
         audienceGold: ['Friends'],
-        locationMustBeOff: true,
+        locationMustBeOff: false,
+        locationMustBeOn: true,
         captionRule: 'keep_or_edit',
         photoGold: ['Original'],
         riskProfile: 'safe',
@@ -64,7 +68,8 @@ export const PRIVACY_BUDGET_LEVEL_GOLD = {
     },
     7: {
         audienceGold: ['Friends'],
-        locationMustBeOff: true,
+        locationMustBeOff: false,
+        locationMustBeOn: true,
         captionRule: 'keep_or_edit',
         photoGold: ['Original'],
         riskProfile: 'safe',
@@ -78,14 +83,16 @@ export const PRIVACY_BUDGET_LEVEL_GOLD = {
     },
     9: {
         audienceGold: ['Friends', 'Close Friends'],
-        locationMustBeOff: true,
+        locationMustBeOff: false,
+        locationMustBeOn: true,
         captionRule: 'edit',
         photoGold: ['Option A'],
         riskProfile: 'dangerous',
     },
     10: {
         audienceGold: ['Close Friends'],
-        locationMustBeOff: true,
+        locationMustBeOff: false,
+        locationMustBeOn: true,
         captionRule: 'edit',
         photoGold: ['Option A'],
         riskProfile: 'dangerous',

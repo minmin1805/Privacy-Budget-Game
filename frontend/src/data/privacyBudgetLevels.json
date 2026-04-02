@@ -7,6 +7,7 @@
   "levels": [
     {
       "id": 1,
+      "profileName": "Alex Kim",
       "slug": "picture-at-the-gate",
       "title": "Picture at the gate",
       "riskProfile": "dangerous",
@@ -63,10 +64,11 @@
     },
     {
       "id": 2,
+      "profileName": "Jordan Reeves",
       "slug": "friends-at-the-fair",
       "title": "Friends at the fair",
       "riskProfile": "dangerous",
-      "scenarioDescription": "You’re at a community event with friends and someone snaps a group photo. A big banner and booth details can anchor where and when this was—more than you want if the post is too public or location-tagged.",
+      "scenarioDescription": "You’re at a community event with friends and someone snaps a group photo. A big banner and booth details can anchor where and when this was—more than you want if the post is too public. A broad city/region location tag is fine; the risk is oversharing in the caption and audience.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
@@ -75,8 +77,8 @@
         "photoOption": "Original"
       },
       "locationTagDisplay": {
-        "primary": "Spring Fest 2026",
-        "subtitle": "Main stage area"
+        "primary": "Colorado",
+        "subtitle": "Denver metro area"
       },
       "imageAsset": {
         "id": "level-02-friends-at-the-fair",
@@ -105,19 +107,20 @@
       },
       "goldPathSummary": {
         "audience": ["Friends"],
-        "locationTagOff": true,
+        "locationTagOn": true,
         "captionRule": "edit",
         "captionExamples": ["Fun day with my people."],
-        "captionCoachNote": "Default caption repeats the event name, year, and main stage—edit so the post doesn’t pin time and place.",
+        "captionCoachNote": "Default caption repeats the event name, year, and main stage—edit so the post doesn’t pin time and place. Keep a broad region tag on.",
         "photoOption": "Option A"
       }
     },
     {
       "id": 3,
+      "profileName": "Priya Malhotra",
       "slug": "new-wheels",
       "title": "New wheels",
       "riskProfile": "dangerous",
-      "scenarioDescription": "You want to show off a new car. A normal photo can still expose too much if a license plate or windshield pass stays visible to a broad audience—especially with location on.",
+      "scenarioDescription": "You want to show off a new car. A normal photo can still expose too much if a license plate or windshield pass stays visible to a broad audience. Use a broad state/region location tag (on)—not a parking pin.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
@@ -126,8 +129,8 @@
         "photoOption": "Original"
       },
       "locationTagDisplay": {
-        "primary": "City Center Parking",
-        "subtitle": "Riverside (generic metro label)"
+        "primary": "Texas",
+        "subtitle": "Dallas–Fort Worth area"
       },
       "imageAsset": {
         "id": "level-03-new-wheels",
@@ -156,7 +159,7 @@
       },
       "goldPathSummary": {
         "audience": ["Friends", "Close Friends"],
-        "locationTagOff": true,
+        "locationTagOn": true,
         "captionRule": "edit",
         "captionExamples": ["So happy with my new ride."],
         "photoOption": "Option A"
@@ -164,6 +167,7 @@
     },
     {
       "id": 4,
+      "profileName": "Chris Reyes",
       "slug": "sideline-snap",
       "title": "Sideline snap",
       "riskProfile": "dangerous",
@@ -215,10 +219,11 @@
     },
     {
       "id": 5,
+      "profileName": "Kyle Haddad",
       "slug": "coffee-catch-up",
       "title": "Coffee catch-up",
       "riskProfile": "safe",
-      "scenarioDescription": "A relaxed coffee table photo with friends. Nothing in the frame needs hiding; the lesson is audience, location, and caption.",
+      "scenarioDescription": "A relaxed coffee table photo with friends. Nothing in the frame needs hiding; the lesson is audience, caption, and using a broad city tag—not a specific café pin.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
@@ -227,8 +232,8 @@
         "photoOption": "Original"
       },
       "locationTagDisplay": {
-        "primary": "The Daily Grind",
-        "subtitle": "Downtown (fictional café)"
+        "primary": "Washington",
+        "subtitle": "Seattle metro area"
       },
       "imageAsset": {
         "id": "level-05-coffee-catch-up",
@@ -254,15 +259,16 @@
       "riskZonesOriginal": {},
       "goldPathSummary": {
         "audience": ["Friends"],
-        "locationTagOff": true,
+        "locationTagOn": true,
         "captionRule": "keep_or_edit",
         "captionExamples": ["Grateful for good friends."],
         "photoOption": "Original",
-        "coachNote": "If players open image edits, A/B are decoys—focus on audience, location, and caption."
+        "coachNote": "If players open image edits, A/B are decoys—focus on audience, broad location on, and caption."
       }
     },
     {
       "id": 6,
+      "profileName": "Amara Johnson",
       "slug": "cousins-weekend",
       "title": "Cousins’ weekend",
       "riskProfile": "safe",
@@ -310,10 +316,11 @@
     },
     {
       "id": 7,
+      "profileName": "Minh Doan",
       "slug": "airport-gate",
       "title": "Airport gate",
       "riskProfile": "safe",
-      "scenarioDescription": "You’re waiting at a gate with friends. Screens and tags look sensitive, but this frame is designed so nothing is actually readable—the lesson is not to panic-crop; focus on who can see the post and location.",
+      "scenarioDescription": "You’re waiting at a gate with friends. Screens and tags look sensitive, but this frame is designed so nothing is actually readable—the lesson is not to panic-crop; focus on audience and a broad travel-area tag.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
@@ -323,8 +330,8 @@
         "photoOption": "Original"
       },
       "locationTagDisplay": {
-        "primary": "Riverside International Airport",
-        "subtitle": "Concourse (no gate number — matches “nothing readable” art)"
+        "primary": "Georgia",
+        "subtitle": "Atlanta metro area"
       },
       "imageAsset": {
         "id": "level-07-airport-gate",
@@ -346,7 +353,7 @@
       "riskZonesOriginal": {},
       "goldPathSummary": {
         "audience": ["Friends"],
-        "locationTagOff": true,
+        "locationTagOn": true,
         "captionRule": "keep_or_edit",
         "captionExamples": ["Chill Sunday.", "Gate vibes."],
         "photoOption": "Original"
@@ -405,10 +412,11 @@
     },
     {
       "id": 9,
+      "profileName": "Riley Okonkwo",
       "slug": "birthday-at-the-door",
       "title": "Birthday at the door",
       "riskProfile": "dangerous",
-      "scenarioDescription": "A birthday gathering near a home entrance. The party is shareable, but readable address text on the wall is a strong real-world leak if combined with Public and location tag.",
+      "scenarioDescription": "A birthday gathering near a home entrance. The party is shareable, but readable address text on the wall is a strong leak. Use a broad city tag (on)—not your street—and tighten audience; blur the address in the image.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
@@ -417,8 +425,8 @@
         "photoOption": "Original"
       },
       "locationTagDisplay": {
-        "primary": "2408 Cypress Ln",
-        "subtitle": "Riverside (strong deliberate leak — matches wall plaque)"
+        "primary": "Arizona",
+        "subtitle": "Phoenix metro"
       },
       "imageAsset": {
         "id": "level-09-birthday-at-the-door",
@@ -447,19 +455,20 @@
       },
       "goldPathSummary": {
         "audience": ["Friends", "Close Friends"],
-        "locationTagOff": true,
+        "locationTagOn": true,
         "captionRule": "edit",
         "captionExamples": ["Grateful for today."],
-        "captionCoachNote": "Avoid confirming “here’s my house.”",
+        "captionCoachNote": "Avoid confirming “here’s my house.” Keep a broad city tag on.",
         "photoOption": "Option A"
       }
     },
     {
       "id": 10,
+      "profileName": "Tess Morales",
       "slug": "night-market",
       "title": "Night market",
       "riskProfile": "dangerous",
-      "scenarioDescription": "An evening street-food moment looks fun, but a large readable sign gives exact place and hours—strong context leak if the post is too public with location on.",
+      "scenarioDescription": "An evening street-food moment looks fun, but a large readable sign gives exact place and hours. Tighten audience and caption; keep a broad regional location tag on—not the venue pin.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
@@ -469,8 +478,8 @@
         "photoOption": "Original"
       },
       "locationTagDisplay": {
-        "primary": "Night Market — Gate B",
-        "subtitle": "Open until 11:30 PM (matches Zone A sign)"
+        "primary": "California",
+        "subtitle": "Los Angeles area"
       },
       "imageAsset": {
         "id": "level-10-night-market",
@@ -499,11 +508,11 @@
       },
       "goldPathSummary": {
         "audience": ["Close Friends"],
-        "locationTagOff": true,
+        "locationTagOn": true,
         "captionRule": "edit",
         "captionExamples": ["Out for snacks.", "Good food, good night."],
         "photoOption": "Option A",
-        "captionCoachNote": "Default caption repeats gate, closing time, and zone text from the scene—edit so the words don’t double the signage.",
+        "captionCoachNote": "Default caption repeats gate, closing time, and zone text from the scene—edit so the words don’t double the signage. Broad region tag can stay on.",
         "coachNote": "captionLegacy is an older default line kept for reference only."
       }
     }
