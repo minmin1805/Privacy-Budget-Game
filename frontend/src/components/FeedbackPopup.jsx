@@ -168,6 +168,15 @@ function FeedbackPopup({ onClose, feedback }) {
             </div>
           ) : null}
 
+          {fb?.captionAi?.source ? (
+            <p className='mt-2 text-xs text-[#5a6280]'>
+              Caption review:{' '}
+              <span className='font-semibold text-[#2f3f7f]'>
+                {fb.captionAi.source === 'azure' ? 'Azure OpenAI' : 'Basic check (no cloud)'}
+              </span>
+            </p>
+          ) : null}
+
           {fb?.captionAi?.reason ? (
             <p className='mt-2 text-sm text-[#334684]'>{fb.captionAi.reason}</p>
           ) : null}

@@ -3,7 +3,7 @@
  * Env: AZURE_OPENAI_ENDPOINT, AZURE_OPENAI_API_KEY, AZURE_OPENAI_DEPLOYMENT, AZURE_OPENAI_API_VERSION
  */
 
-const DEFAULT_API_VERSION = '2024-08-01-preview';
+const DEFAULT_API_VERSION = '2025-01-01-preview';
 
 function heuristicGrade(caption) {
     const text = (caption || '').trim();
