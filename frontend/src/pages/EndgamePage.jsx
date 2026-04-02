@@ -6,6 +6,9 @@ import logo from '../assets/Photo/EndgamePage/logo.png'
 import ScoreDisplay from '../components/ScoreDisplay'
 import { usePrivacyBudget } from '../context/PrivacyBudgetContext'
 import { getSessionTitleFromScore } from '../utils/sessionTitle'
+import privacyproBadge from '../assets/Photo/EndgamePage/privacypro.png'
+import smartsharerBadge from '../assets/Photo/EndgamePage/smartsharer.png'
+import privacyexplorerBadge from '../assets/Photo/EndgamePage/privacyexplorer.png'
 
 export default function EndgamePage() {
   const navigate = useNavigate()
