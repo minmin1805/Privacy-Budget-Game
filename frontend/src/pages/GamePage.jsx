@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import ImagePickerPopup from '../components/ImagePickerPopup'
 import FeedbackPopup from '../components/FeedbackPopup'
+import GameCountdownOverlay from '../components/GameCountdownOverlay'
 import { usePrivacyBudget } from '../context/PrivacyBudgetContext'
 import { getMergedLevelAssets, hasOnlyOptionA } from '../utils/levelAssets'
 import { computeLiveMeters } from '../utils/liveMeters'
@@ -10,6 +11,9 @@ import fallbackProfile from '../assets/Photo/GamePage/mockprofile.png'
 import fallbackPost from '../assets/Photo/GamePage/postimage.png'
 import { FaHeart, FaMapMarkerAlt, FaRegCommentDots, FaRegShareSquare, FaRegThumbsUp } from 'react-icons/fa'
 import { IoShield } from 'react-icons/io5'
+
+const INTRO_COUNTDOWN_DONE = 'pb_intro_countdown_done'
+const INTRO_COUNTDOWN_LOCK = 'pb_intro_countdown_lock'
 
 const pillBase =
   'px-3 py-1.5 text-xs font-semibold rounded-md border transition-colors duration-200'
@@ -109,6 +113,7 @@ export default function GamePage() {
   const [isImagePickerOpen, setIsImagePickerOpen] = useState(false)
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false)
   const [pendingNavigateEndgame, setPendingNavigateEndgame] = useState(false)
+  const [countdownNumber, setCountdownNumber] = useState(null)
 
   useEffect(() => {
     if (!hydrated) return
@@ -116,6 +121,38 @@ export default function GamePage() {
       navigate('/welcome', { replace: true })
     }
   }, [hydrated, playerId, navigate])
+
+  const runCountdownSequence = useCallback((onDone) => {
+    setCountdownNumber(3)
+    window.setTimeout(() => {
+      setCountdownNumber(2)
+      window.setTimeout(() => {
+        setCountdownNumber(1)
+        window.setTimeout(() => {
+          setCountdownNumber(null)
+          onDone()
+        }, 750)
+      }, 750)
+    }, 750)
+  }, [])
+
+  useEffect(() => {
+    if (!hydrated || !playerId) return
+    if (currentLevel !== 1) return
+    if (sessionStorage.getItem(INTRO_COUNTDOWN_DONE)) return
+    if (sessionStorage.getItem(INTRO_COUNTDOWN_LOCK)) return
+    sessionStorage.setItem(INTRO_COUNTDOWN_LOCK, '1')
+    let cancelled = false
+    runCountdownSequence(() => {
+      sessionStorage.removeItem(INTRO_COUNTDOWN_LOCK)
+      if (cancelled) return
+      sessionStorage.setItem(INTRO_COUNTDOWN_DONE, '1')
+    })
+    return () => {
+      cancelled = true
+      sessionStorage.removeItem(INTRO_COUNTDOWN_LOCK)
+    }
+  }, [hydrated, playerId, currentLevel, runCountdownSequence])
 
   const assets = useMemo(
     () => getMergedLevelAssets(currentLevel, currentLevelConfig),
@@ -165,11 +202,15 @@ export default function GamePage() {
     const goEnd = pendingNavigateEndgame
     setIsFeedbackOpen(false)
     setPendingNavigateEndgame(false)
-    nextLevel()
     if (goEnd) {
+      nextLevel()
       navigate('/endgame')
+      return
     }
-  }, [pendingNavigateEndgame, nextLevel, navigate])
+    runCountdownSequence(() => {
+      nextLevel()
+    })
+  }, [pendingNavigateEndgame, nextLevel, navigate, runCountdownSequence])
 
   const scrollToPreview = () => {
     postCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -189,7 +230,8 @@ export default function GamePage() {
   }
 
   return (
-    <div className='min-h-screen bg-[#ebedf2]'>
+    <div className='min-h-screen bg-[#ebedf2] relative'>
+      <GameCountdownOverlay value={countdownNumber} />
       <Header currentLevel={currentLevel} totalLevels={10} totalScore={privacyTotalScore} />
 
       <main className='max-w-[1720px] mx-auto px-4 md:px-6 py-3 mt-5'>

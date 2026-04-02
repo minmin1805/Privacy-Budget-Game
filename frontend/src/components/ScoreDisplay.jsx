@@ -1,12 +1,29 @@
 import React from 'react'
-import mockBadge from '../assets/Photo/ScoreDisplay/mockbadge.png'
+import privacyproBadge from '../assets/Photo/EndgamePage/privacypro.png'
+import smartsharerBadge from '../assets/Photo/EndgamePage/smartsharer.png'
+import privacyexplorerBadge from '../assets/Photo/EndgamePage/privacyexplorer.png'
 
-function ScoreDisplay({ title = 'Privacy Explorer', blurb, totalScore = 0, scenariosCleared, scenariosTotal = 10 }) {
+const BADGE_BY_ID = {
+  privacypro: privacyproBadge,
+  smartsharer: smartsharerBadge,
+  privacyexplorer: privacyexplorerBadge,
+}
+
+function ScoreDisplay({
+  title = 'Privacy Explorer',
+  blurb,
+  totalScore = 0,
+  badgeId = 'privacyexplorer',
+  scenariosCleared,
+  scenariosTotal = 10,
+}) {
   const scoreLabel = typeof totalScore === 'number' ? totalScore.toLocaleString() : String(totalScore)
   const scenariosLine =
     scenariosCleared != null && scenariosTotal != null
       ? `${scenariosCleared}/${scenariosTotal} scenarios cleared`
       : null
+
+  const badgeSrc = BADGE_BY_ID[badgeId] ?? privacyexplorerBadge
 
   return (
     <div className='w-full max-w-[460px] rounded-3xl bg-[#ddecff] p-3'>
@@ -19,7 +36,7 @@ function ScoreDisplay({ title = 'Privacy Explorer', blurb, totalScore = 0, scena
 
         <div className='px-4 py-4 text-center text-[#334684]'>
           <img
-            src={mockBadge}
+            src={badgeSrc}
             alt={`${title} badge`}
             className='w-[66%] max-w-[300px] mx-auto object-contain'
           />

@@ -6,10 +6,12 @@ const POINTS_PER_LEVEL = 400
 const levelCount = privacyBudgetData.levels?.length ?? 10
 const maxRunScore = levelCount * POINTS_PER_LEVEL
 
+/** @typedef {'privacypro' | 'smartsharer' | 'privacyexplorer'} SessionBadgeId */
+
 /**
  * Endgame title from cumulative privacy-budget score only (ratio vs theoretical max).
  * Three bands: Privacy Pro (top), Smart Sharer (middle), Privacy Explorer (low).
- * @returns {{ title: string, blurb: string }}
+ * @returns {{ title: string, blurb: string, badgeId: SessionBadgeId }}
  */
 export function getSessionTitleFromScore(totalScore) {
   const s = Math.max(0, Number(totalScore) || 0)
@@ -19,17 +21,20 @@ export function getSessionTitleFromScore(totalScore) {
     return {
       title: 'Privacy Pro',
       blurb: 'Strong run—your choices added up across every scenario.',
+      badgeId: 'privacypro',
     }
   }
   if (ratio >= 0.38) {
     return {
       title: 'Smart Sharer',
       blurb: 'Decent habits—there’s still room to tighten audience, location, caption, and photo.',
+      badgeId: 'smartsharer',
     }
   }
   return {
     title: 'Privacy Explorer',
     blurb: 'You’re still mapping what works—another run will sharpen your instincts.',
+    badgeId: 'privacyexplorer',
   }
 }
 

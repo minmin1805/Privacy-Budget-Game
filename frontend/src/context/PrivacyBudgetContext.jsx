@@ -226,6 +226,7 @@ export function PrivacyBudgetProvider({ children }) {
 
   const reset = useCallback(() => {
     sessionStorage.removeItem(STORAGE_KEY)
+    sessionStorage.removeItem('pb_intro_countdown_done')
     setPlayerId(null)
     setUsername('')
     setSessionId(null)
