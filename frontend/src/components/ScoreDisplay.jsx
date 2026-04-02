@@ -1,7 +1,7 @@
 import React from 'react'
 import mockBadge from '../assets/Photo/ScoreDisplay/mockbadge.png'
 
-function ScoreDisplay({ title = 'Steady Learner', blurb, totalScore = 0, scenariosCleared, scenariosTotal = 10 }) {
+function ScoreDisplay({ title = 'Privacy Explorer', blurb, totalScore = 0, scenariosCleared, scenariosTotal = 10 }) {
   const scoreLabel = typeof totalScore === 'number' ? totalScore.toLocaleString() : String(totalScore)
   const scenariosLine =
     scenariosCleared != null && scenariosTotal != null

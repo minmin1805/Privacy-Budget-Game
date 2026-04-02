@@ -8,33 +8,28 @@ const maxRunScore = levelCount * POINTS_PER_LEVEL
 
 /**
  * Endgame title from cumulative privacy-budget score only (ratio vs theoretical max).
+ * Three bands: Privacy Pro (top), Smart Sharer (middle), Privacy Explorer (low).
  * @returns {{ title: string, blurb: string }}
  */
 export function getSessionTitleFromScore(totalScore) {
   const s = Math.max(0, Number(totalScore) || 0)
   const ratio = maxRunScore > 0 ? s / maxRunScore : 0
 
-  if (ratio >= 0.88) {
+  if (ratio >= 0.7) {
     return {
-      title: 'Privacy Ace',
-      blurb: 'You stacked strong habits across the run.',
+      title: 'Privacy Pro',
+      blurb: 'Strong run—your choices added up across every scenario.',
     }
   }
-  if (ratio >= 0.68) {
+  if (ratio >= 0.38) {
     return {
-      title: 'Sharp Sharer',
-      blurb: 'Solid instincts—keep refining the details.',
-    }
-  }
-  if (ratio >= 0.42) {
-    return {
-      title: 'Steady Learner',
-      blurb: 'You’re building the muscle—one choice at a time.',
+      title: 'Smart Sharer',
+      blurb: 'Decent habits—there’s still room to tighten audience, location, caption, and photo.',
     }
   }
   return {
-    title: 'First Steps',
-    blurb: 'Every scenario is practice—run it again anytime.',
+    title: 'Privacy Explorer',
+    blurb: 'You’re still mapping what works—another run will sharpen your instincts.',
   }
 }
 

@@ -4,7 +4,7 @@ import Header from '../components/Header'
 import ImagePickerPopup from '../components/ImagePickerPopup'
 import FeedbackPopup from '../components/FeedbackPopup'
 import { usePrivacyBudget } from '../context/PrivacyBudgetContext'
-import { getLevelAssets, hasOnlyOptionA } from '../utils/levelAssets'
+import { getMergedLevelAssets, hasOnlyOptionA } from '../utils/levelAssets'
 import { computeLiveMeters } from '../utils/liveMeters'
 import fallbackProfile from '../assets/Photo/GamePage/mockprofile.png'
 import fallbackPost from '../assets/Photo/GamePage/postimage.png'
@@ -117,15 +117,27 @@ export default function GamePage() {
     }
   }, [hydrated, playerId, navigate])
 
-  const assets = useMemo(() => getLevelAssets(currentLevel), [currentLevel])
-  const singleOptionOnly = useMemo(() => hasOnlyOptionA(currentLevel), [currentLevel])
+  const assets = useMemo(
+    () => getMergedLevelAssets(currentLevel, currentLevelConfig),
+    [currentLevel, currentLevelConfig],
+  )
+  const singleOptionOnly = useMemo(
+    () => hasOnlyOptionA(currentLevel, currentLevelConfig),
+    [currentLevel, currentLevelConfig],
+  )
 
   const profileSrc = assets.profile ?? fallbackProfile
   const postSrc = useMemo(() => postImageForDraft(draft, assets), [draft, assets])
 
   const photoLabels = currentLevelConfig?.photoOptionLabels ?? {}
-  const optionATitle = photoLabels['Option A']?.title ?? 'Option A'
-  const optionBTitle = photoLabels['Option B']?.title ?? 'Option B'
+  const optALabel = photoLabels['Option A'] ?? {}
+  const optBLabel = photoLabels['Option B'] ?? {}
+  const optionATitle = optALabel.title ?? 'Option A'
+  const optionBTitle = optBLabel.title ?? 'Option B'
+  const optionASubtitle = optALabel.subtitle
+  const optionBSubtitle = optBLabel.subtitle
+  const optionADescription = optALabel.description
+  const optionBDescription = optBLabel.description
 
   const openImagePicker = () => setIsImagePickerOpen(true)
   const closeImagePicker = () => setIsImagePickerOpen(false)
@@ -236,11 +248,13 @@ export default function GamePage() {
                 </div>
               </div>
 
-              <img
-                src={postSrc}
-                alt='Post content'
-                className='w-full h-[250px] md:h-[320px] object-cover border-y border-[#404454]'
-              />
+              <div className='w-full border-y border-[#404454] bg-[#e8eaf1] flex items-center justify-center'>
+                <img
+                  src={postSrc}
+                  alt='Post content'
+                  className='w-full max-w-full max-h-[min(78dvh,920px)] h-auto object-contain'
+                />
+              </div>
 
               <div className='px-4 py-3'>
                 <p className='text-base md:text-[24px] leading-tight text-[#1b1e2d]'>
@@ -373,6 +387,10 @@ export default function GamePage() {
           optionBUrl={assets.optionB}
           optionATitle={optionATitle}
           optionBTitle={optionBTitle}
+          optionASubtitle={optionASubtitle}
+          optionBSubtitle={optionBSubtitle}
+          optionADescription={optionADescription}
+          optionBDescription={optionBDescription}
           singleOptionOnly={singleOptionOnly}
         />
       )}

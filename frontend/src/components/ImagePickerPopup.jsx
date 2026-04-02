@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { IoClose } from 'react-icons/io5'
 
-function OptionCard({ title, imageSrc, isSelected, onClick }) {
+function OptionCard({ title, subtitle, description, imageSrc, isSelected, onClick }) {
   return (
     <button
       type='button'
@@ -12,11 +12,27 @@ function OptionCard({ title, imageSrc, isSelected, onClick }) {
           : 'border-[#5a5a5a] hover:border-[#3557b7]'
       }`}
     >
-      <h3 className='text-[#24356f] text-lg md:text-xl font-bold text-center mb-3'>{title}</h3>
+      <div className='mb-3'>
+        <h3 className='text-[#24356f] text-lg md:text-xl font-bold text-center'>{title}</h3>
+        {subtitle ? (
+          <p className='text-[#1e3a6e] text-sm md:text-base font-semibold text-center mt-1'>{subtitle}</p>
+        ) : null}
+        {description ? (
+          <p className='text-[#2a3148] text-sm md:text-[15px] leading-snug text-center mt-2 px-1'>
+            {description}
+          </p>
+        ) : null}
+      </div>
       {imageSrc ? (
-        <img src={imageSrc} alt={title} className='w-full h-[220px] md:h-[280px] object-cover rounded-sm' />
+        <div className='w-full flex items-center justify-center bg-[#c5c5c5] rounded-sm min-h-[140px] max-h-[min(58dvh,820px)] overflow-auto'>
+          <img
+            src={imageSrc}
+            alt={title}
+            className='max-w-full max-h-[min(58dvh,820px)] w-auto h-auto object-contain'
+          />
+        </div>
       ) : (
-        <div className='w-full h-[220px] md:h-[280px] bg-[#bbb] rounded-sm flex items-center justify-center text-[#444] text-sm'>
+        <div className='w-full min-h-[140px] max-h-[min(58dvh,820px)] bg-[#bbb] rounded-sm flex items-center justify-center text-[#444] text-sm'>
           Image not available
         </div>
       )}
@@ -31,6 +47,10 @@ function ImagePickerPopup({
   optionBUrl,
   optionATitle = 'Option A',
   optionBTitle = 'Option B',
+  optionASubtitle,
+  optionBSubtitle,
+  optionADescription,
+  optionBDescription,
   singleOptionOnly = false,
 }) {
   const [selectedOption, setSelectedOption] = useState(null)
@@ -62,7 +82,7 @@ function ImagePickerPopup({
     <div className='fixed inset-0 z-50 flex items-center justify-center p-3 md:p-6'>
       <div className='absolute inset-0 bg-black/40' onClick={onClose} aria-hidden />
 
-      <div className='relative w-full max-w-[1200px] rounded-xl border border-[#5c5c5c] bg-[#efefef] p-4 md:p-6 shadow-2xl'>
+      <div className='relative w-full max-w-[1200px] max-h-[92vh] overflow-y-auto rounded-xl border border-[#5c5c5c] bg-[#efefef] p-4 md:p-6 shadow-2xl'>
         <button
           type='button'
           onClick={onClose}
@@ -81,6 +101,8 @@ function ImagePickerPopup({
         >
           <OptionCard
             title={optionATitle}
+            subtitle={optionASubtitle}
+            description={optionADescription}
             imageSrc={optionAUrl}
             isSelected={selectedOption === 'Option A'}
             onClick={() => handleSelect('Option A')}
@@ -88,6 +110,8 @@ function ImagePickerPopup({
           {!singleOptionOnly && (
             <OptionCard
               title={optionBTitle}
+              subtitle={optionBSubtitle}
+              description={optionBDescription}
               imageSrc={optionBUrl}
               isSelected={selectedOption === 'Option B'}
               onClick={() => handleSelect('Option B')}
