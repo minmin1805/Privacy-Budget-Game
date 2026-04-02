@@ -36,13 +36,13 @@
         },
         "Option A": {
           "title": "Option A",
-          "subtitle": "Crop A",
-          "description": "Tighter crop; readable fictional school sign RIVERSIDE HIGH may still appear depending on frame."
+          "subtitle": "Blur",
+          "description": "Blur the friends in the background"
         },
         "Option B": {
           "title": "Option B",
-          "subtitle": "Crop B (tightest)",
-          "description": "Tightest crop; reduces identifying background; gold path for this level."
+          "subtitle": "Blur",
+          "description": "Blur school sign and the night market sign"
         }
       },
       "riskZonesOriginal": {
@@ -92,11 +92,11 @@
         },
         "Option A": {
           "title": "Option A",
-          "description": "Edit that reduces banner / MAIN STAGE cues (gold path)."
+          "description": "Blur SPRING FEST 2026 banner"
         },
         "Option B": {
           "title": "Option B",
-          "description": "Alternate crop/blur focused on food-stall area."
+          "description": "Blur food-stall chalkboard"
         }
       },
       "riskZonesOriginal": {
@@ -143,11 +143,11 @@
         },
         "Option A": {
           "title": "Option A",
-          "description": "Reduces plate / pass visibility (gold path)."
+          "description": "Blur the license plate."
         },
         "Option B": {
           "title": "Option B",
-          "description": "Alternative crop on background billboard."
+          "description": "Blur the background billboard."
         }
       },
       "riskZonesOriginal": {
@@ -193,11 +193,11 @@
         },
         "Option A": {
           "title": "Option A",
-          "description": "Targets schedule board PRACTICE 4:30."
+          "description": "Blur the schedule board"
         },
         "Option B": {
           "title": "Option B",
-          "description": "Reduces jersey/name tag R. SANTOS exposure (gold path)."
+          "description": "Blur the jersey and name tag R. SANTOS"
         }
       },
       "riskZonesOriginal": {
@@ -244,11 +244,11 @@
         },
         "Option A": {
           "title": "Option A",
-          "description": "Blur the banner in the background (optional; not required for gold)."
+          "description": "Blur the banner in the background"
         },
         "Option B": {
           "title": "Option B",
-          "description": "Crop out the table (optional; not required for gold)."
+          "description": "Crop out the table"
         }
       },
       "riskZonesOriginal": {},
@@ -292,11 +292,11 @@
         },
         "Option A": {
           "title": "Option A",
-          "description": "Blur the phone (optional)."
+          "description": "Blur the phone"
         },
         "Option B": {
           "title": "Option B",
-          "description": "Blur the documents (optional)."
+          "description": "Blur the documents"
         }
       },
       "riskZonesOriginal": {},
@@ -340,11 +340,7 @@
         },
         "Option A": {
           "title": "Option A",
-          "description": "Remove the tags (optional)."
-        },
-        "Option B": {
-          "title": "Option B",
-          "description": "Blur the banners behind (optional)."
+          "description": "Blur the depature banner in the background"
         }
       },
       "riskZonesOriginal": {},
@@ -391,7 +387,7 @@
         },
         "Option B": {
           "title": "Option B",
-          "description": "Blur the address (gold path)."
+          "description": "Blur the address"
         }
       },
       "riskZonesOriginal": {
@@ -438,7 +434,7 @@
         },
         "Option A": {
           "title": "Option A",
-          "description": "Blur the address (gold path)."
+          "description": "Blur the address"
         },
         "Option B": {
           "title": "Option B",
@@ -490,11 +486,11 @@
         },
         "Option A": {
           "title": "Option A",
-          "description": "Blur night-market address/sign (gold path)."
+          "description": "Blur night-market address/sign"
         },
         "Option B": {
           "title": "Option B",
-          "description": "Blur the menu banner."
+          "description": "Blur the menu banner"
         }
       },
       "riskZonesOriginal": {
