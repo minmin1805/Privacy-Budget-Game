@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
+import InstructionPopup from '../components/InstructionPopup'
 import ImagePickerPopup from '../components/ImagePickerPopup'
 import FeedbackPopup from '../components/FeedbackPopup'
 import GameCountdownOverlay from '../components/GameCountdownOverlay'
@@ -111,6 +112,7 @@ export default function GamePage() {
   } = usePrivacyBudget()
 
   const [isImagePickerOpen, setIsImagePickerOpen] = useState(false)
+  const [isInstructionOpen, setIsInstructionOpen] = useState(false)
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false)
   const [pendingNavigateEndgame, setPendingNavigateEndgame] = useState(false)
   const [countdownNumber, setCountdownNumber] = useState(null)
@@ -232,7 +234,12 @@ export default function GamePage() {
   return (
     <div className='min-h-screen bg-[#ebedf2] relative'>
       <GameCountdownOverlay value={countdownNumber} />
-      <Header currentLevel={currentLevel} totalLevels={10} totalScore={privacyTotalScore} />
+      <Header
+        currentLevel={currentLevel}
+        totalLevels={10}
+        totalScore={privacyTotalScore}
+        onHelpClick={() => setIsInstructionOpen(true)}
+      />
 
       <main className='max-w-[1720px] mx-auto px-4 md:px-6 py-3 mt-5'>
         <section className='grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4'>
@@ -422,6 +429,10 @@ export default function GamePage() {
           </aside>
         </section>
       </main>
+
+      {isInstructionOpen && (
+        <InstructionPopup onClose={() => setIsInstructionOpen(false)} />
+      )}
 
       {isImagePickerOpen && (
         <ImagePickerPopup
