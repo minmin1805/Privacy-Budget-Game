@@ -395,12 +395,12 @@
         },
         "Option B": {
           "title": "Option B",
-          "description": "Blur the address"
+          "description": "Blur the address and student id"
         }
       },
       "riskZonesOriginal": {
         "Option A": "Crop out the table",
-        "Option B": "Blur the address"
+        "Option B": "Blur the address and student id"
       },
       "goldPathSummary": {
         "audience": ["Close Friends"],
