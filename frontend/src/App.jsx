@@ -29,11 +29,11 @@ function AppContent() {
     return () => document.removeEventListener('click', handleGlobalClick, true)
   }, [playClickSound, playButtonClickSound])
 
-  // Attempt to start background music automatically (autoplay may still be blocked by the browser).
+  // Attempt to start background music after leaving content warning (autoplay may still be blocked until user gesture).
   useEffect(() => {
     if (location.pathname === '/') return
     startMusic()
-  }, [location.pathname])
+  }, [location.pathname, startMusic])
 
   return (
     <>
@@ -43,7 +43,7 @@ function AppContent() {
         <Route path="/welcome" element={<WelcomePage />} />
         <Route path="/instruction" element={<InstructionPage />} />
         <Route path="/game" element={<GamePage />} />
-          <Route path="/endgame" element={<EndgamePage />} />
+        <Route path="/endgame" element={<EndgamePage />} />
       </Routes>
     </>
   )
@@ -53,14 +53,12 @@ function App() {
   return (
     <Router>
       <PrivacyBudgetProvider>
-      <SoundProvider>
-        <MusicProvider>
-          <Router>
+        <SoundProvider>
+          <MusicProvider>
             <AppContent />
-          </Router>
-        </MusicProvider>
-      </SoundProvider>      
-    </PrivacyBudgetProvider>
+          </MusicProvider>
+        </SoundProvider>
+      </PrivacyBudgetProvider>
     </Router>
   )
 }

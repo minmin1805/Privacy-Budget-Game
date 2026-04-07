@@ -17,7 +17,7 @@ export default function MusicToggleButton() {
         // Mobile: single corner (top + right only) — explicit size so nothing expands
         'right-3 top-3 h-11 w-11 p-0 sm:h-auto sm:w-auto sm:p-2.5',
         // Desktop / larger phones: bottom-left with optional label
-        'sm:bottom-17 sm:left-4 sm:right-auto sm:top-auto',
+        'sm:bottom-16 sm:left-4 sm:right-auto sm:top-auto',
       ].join(' ')}
       aria-label={isPlaying ? 'Mute music' : 'Play music'}
       title={isPlaying ? 'Mute music' : 'Play music'}
