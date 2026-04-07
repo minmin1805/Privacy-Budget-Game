@@ -37,12 +37,12 @@ function FeedbackPopup({ onClose, feedback }) {
     levelScore != null || basePoints != null || bonus != null || penalty != null
 
   return (
-    <div className='fixed inset-0 z-60 flex items-center justify-center p-2 md:p-4'>
+    <div className='fixed inset-0 z-60 flex items-start justify-center overflow-y-auto overscroll-contain p-2 pt-[max(0.5rem,env(safe-area-inset-top))] pb-[max(0.5rem,env(safe-area-inset-bottom))] md:p-4 md:items-center'>
       <div className='absolute inset-0 bg-black/45' aria-hidden />
 
-      <div className='relative w-full max-w-[980px] max-h-[92vh] overflow-y-auto rounded-2xl border border-[#2d3150] bg-[#f1f2f6] p-2.5 md:p-3 shadow-2xl'>
-        <div className='rounded-xl bg-[#35468a] text-white px-4 md:px-6 py-2.5 md:py-3 text-center'>
-          <h2 className='text-2xl md:text-4xl font-extrabold leading-tight'>How your choices landed</h2>
+      <div className='relative my-auto w-full max-w-[980px] max-h-[min(92dvh,92vh)] overflow-y-auto rounded-2xl border border-[#2d3150] bg-[#f1f2f6] p-2.5 md:p-3 shadow-2xl'>
+        <div className='rounded-xl bg-[#35468a] text-white px-3 md:px-6 py-2.5 md:py-3 text-center'>
+          <h2 className='text-xl sm:text-2xl md:text-4xl font-extrabold leading-tight'>How your choices landed</h2>
           <p className='text-sm md:text-lg mt-1 font-medium'>
             This measures how close you are to a strong balance - not a simple right/wrong
           </p>
@@ -100,7 +100,7 @@ function FeedbackPopup({ onClose, feedback }) {
             )}
           </div>
 
-          <div className='mt-3 rounded-xl border border-[#696f8c] bg-[#d9deee] px-3 md:px-5 py-2 grid grid-cols-3 items-center text-center'>
+          <div className='mt-3 rounded-xl border border-[#696f8c] bg-[#d9deee] px-2 md:px-5 py-2 grid grid-cols-3 items-center text-center gap-1'>
             <div>
               <p className='text-[10px] md:text-xs uppercase tracking-wide text-[#2d3555]'>Outcome band</p>
               <p className='text-lg md:text-2xl font-bold text-[#141a2f] capitalize'>{band}</p>
@@ -181,11 +181,11 @@ function FeedbackPopup({ onClose, feedback }) {
             <p className='mt-2 text-sm text-[#334684]'>{fb.captionAi.reason}</p>
           ) : null}
 
-          <div className='mt-3 flex justify-center'>
+          <div className='mt-3 flex justify-center px-1'>
             <button
               type='button'
               onClick={onClose}
-              className='rounded-xl px-7 py-2 bg-[#1970e8] text-white text-lg md:text-2xl font-bold border border-[#1c4fa6] hover:brightness-105'
+              className='w-full max-w-md rounded-xl px-6 py-3 min-h-[48px] bg-[#1970e8] text-white text-base sm:text-lg md:text-2xl font-bold border border-[#1c4fa6] hover:brightness-105 touch-manipulation'
             >
               Next scenario
             </button>

@@ -20,17 +20,19 @@ export default function EndgamePage() {
   }
 
   return (
-    <div className='relative z-10 flex flex-col w-full items-center py-6 sm:py-8 bg-[#d2ccfa]'>
+    <div className='relative z-10 flex flex-col w-full min-h-[100dvh] items-center py-6 sm:py-8 px-3 bg-[#d2ccfa] pb-[max(2rem,env(safe-area-inset-bottom))] pt-[max(0.5rem,env(safe-area-inset-top))]'>
       <img
         src={logo}
         alt='Friend or Foe logo'
-        className='w-60 sm:w-44 lg:w-[350px] items-center ml-4 sm:ml-6 mb-4 sm:mb-6 '
+        className='w-[min(240px,75vw)] sm:w-44 lg:w-[350px] h-auto object-contain mb-4 sm:mb-6'
       />
 
-      <h2>Tune what you share - before you post.</h2>
-      <div className='w-[70%] border-t-2 border-dotted border-gray-800 mt-4'></div>
+      <h2 className='text-center text-base sm:text-lg md:text-xl font-semibold text-[#1b2244] px-2 max-w-lg'>
+        Tune what you share — before you post.
+      </h2>
+      <div className='w-[min(90%,28rem)] border-t-2 border-dotted border-gray-800 mt-4' />
 
-      <div className='flex flex-col lg:flex-row items-center justify-center w-full max-w-6xl px-4 sm:px-6 gap-6 lg:gap-10 mt-4 sm:mt-8'>
+      <div className='flex flex-col lg:flex-row items-stretch lg:items-center justify-center w-full max-w-6xl px-2 sm:px-6 gap-6 lg:gap-10 mt-4 sm:mt-8'>
         <div className='w-full lg:w-auto flex justify-center h-fit'>
           <ScoreDisplay
             title={title}
@@ -45,16 +47,16 @@ export default function EndgamePage() {
         <Leaderboard currentPlayerName={username} />
       </div>
 
-      <div className='flex flex-col sm:flex-row mt-8 sm:mt-10 gap-4 sm:gap-8 justify-center w-full px-4 sm:px-6 pb-8'>
+      <div className='flex flex-col sm:flex-row mt-8 sm:mt-10 gap-3 sm:gap-8 justify-center w-full max-w-xl sm:max-w-none px-4 sm:px-6 pb-8'>
         <button
           type='button'
-          className='bg-[#ddecff] text-blue-900 px-4 py-2 rounded-md text-lg sm:text-xl font-bold flex items-center justify-center gap-2'
+          className='bg-[#ddecff] text-blue-900 px-4 py-3 rounded-md text-base sm:text-lg md:text-xl font-bold flex items-center justify-center gap-2 min-h-[48px] w-full sm:w-auto touch-manipulation'
         >
           <IoMdDownload /> Download Safety Checklist!
         </button>
         <button
           type='button'
-          className='bg-[#ddecff] text-blue-900 px-4 py-2 rounded-md text-lg sm:text-xl font-bold'
+          className='bg-[#ddecff] text-blue-900 px-4 py-3 rounded-md text-base sm:text-lg md:text-xl font-bold min-h-[48px] w-full sm:w-auto touch-manipulation'
           onClick={exitToMenu}
         >
           Exit To Menu

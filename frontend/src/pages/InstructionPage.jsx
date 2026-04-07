@@ -43,7 +43,7 @@ export default function InstructionPage() {
         aria-hidden
       />
 
-      <div className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-8 sm:px-8 sm:py-12 lg:px-10 lg:py-14">
+      <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-6xl flex-col px-4 py-6 sm:px-8 sm:py-12 lg:px-10 lg:py-14 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[max(0.5rem,env(safe-area-inset-top))]">
         <InstructionContent headingId="instruction-page-heading" />
 
         <div className="mt-8 flex flex-col items-center pb-4 sm:mt-10">
@@ -51,7 +51,7 @@ export default function InstructionPage() {
             type="button"
             onClick={handleStartGame}
             disabled={!hydrated || !playerId}
-            className="w-full max-w-2xl rounded-full py-3.5 px-8 text-base font-bold text-white shadow-[0_4px_20px_rgba(0,123,255,0.35)] transition hover:brightness-110 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 sm:py-4 sm:text-lg"
+            className="w-full max-w-2xl min-h-[48px] rounded-full py-3.5 px-8 text-base font-bold text-white shadow-[0_4px_20px_rgba(0,123,255,0.35)] transition hover:brightness-110 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 sm:py-4 sm:text-lg touch-manipulation"
             style={{ backgroundColor: INSTR_BTN }}
           >
             Start game

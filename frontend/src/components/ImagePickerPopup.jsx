@@ -24,11 +24,11 @@ function OptionCard({ title, subtitle, description, imageSrc, isSelected, onClic
         ) : null}
       </div>
       {imageSrc ? (
-        <div className='w-full flex items-center justify-center bg-[#c5c5c5] rounded-sm min-h-[140px] max-h-[min(58dvh,820px)] overflow-auto'>
+        <div className='w-full flex items-center justify-center bg-[#c5c5c5] rounded-sm min-h-[120px] max-h-[min(42dvh,520px)] sm:max-h-[min(58dvh,820px)] overflow-auto'>
           <img
             src={imageSrc}
             alt={title}
-            className='max-w-full max-h-[min(58dvh,820px)] w-auto h-auto object-contain'
+            className='max-w-full max-h-[min(42dvh,520px)] sm:max-h-[min(58dvh,820px)] w-auto h-auto object-contain'
           />
         </div>
       ) : (
@@ -79,20 +79,20 @@ function ImagePickerPopup({
   const canSubmit = Boolean(selectedOption)
 
   return (
-    <div className='fixed inset-0 z-50 flex items-center justify-center p-3 md:p-6'>
+    <div className='fixed inset-0 z-50 flex items-start justify-center overflow-y-auto overscroll-contain p-3 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))] md:p-6 md:items-center'>
       <div className='absolute inset-0 bg-black/40' onClick={onClose} aria-hidden />
 
-      <div className='relative w-full max-w-[1200px] max-h-[92vh] overflow-y-auto rounded-xl border border-[#5c5c5c] bg-[#efefef] p-4 md:p-6 shadow-2xl'>
+      <div className='relative my-4 w-full max-w-[1200px] max-h-[min(92dvh,92vh)] overflow-y-auto rounded-xl border border-[#5c5c5c] bg-[#efefef] p-3 sm:p-4 md:p-6 shadow-2xl'>
         <button
           type='button'
           onClick={onClose}
-          className='absolute right-4 top-3 text-black hover:text-[#1d4ed8] transition-colors'
+          className='absolute right-2 top-2 sm:right-4 sm:top-3 text-black hover:text-[#1d4ed8] transition-colors p-2 min-h-[44px] min-w-[44px] flex items-center justify-center'
           aria-label='Close image picker'
         >
-          <IoClose size={52} />
+          <IoClose className='w-8 h-8 sm:w-12 sm:h-12' />
         </button>
 
-        <h2 className='text-[#24356f] text-xl md:text-4xl font-bold mb-5 pr-16'>
+        <h2 className='text-[#24356f] text-lg sm:text-xl md:text-4xl font-bold mb-4 sm:mb-5 pr-12 sm:pr-16 leading-snug'>
           Choose the versions of the original image you want to replace
         </h2>
 
@@ -119,12 +119,12 @@ function ImagePickerPopup({
           )}
         </div>
 
-        <div className='mt-5 flex justify-end'>
+        <div className='mt-5 flex justify-stretch sm:justify-end'>
           <button
             type='button'
             onClick={handleSubmit}
             disabled={!canSubmit}
-            className='rounded-lg px-7 py-2.5 text-lg font-bold text-white bg-[#2f79df] border border-[#234f92] disabled:opacity-50 disabled:cursor-not-allowed'
+            className='w-full sm:w-auto rounded-lg px-6 py-3 min-h-[48px] text-base sm:text-lg font-bold text-white bg-[#2f79df] border border-[#234f92] disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation'
           >
             Submit Selection
           </button>

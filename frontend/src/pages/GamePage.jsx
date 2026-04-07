@@ -21,20 +21,20 @@ const pillBase =
 
 function ToggleRow({ label, left, right, leftActive = true, onLeftClick, onRightClick }) {
   return (
-    <div className='rounded-xl border border-[#5f6686] bg-white px-4 py-3 flex items-center justify-between gap-4'>
-      <span className='text-sm md:text-base font-semibold text-[#1b2244]'>{label}</span>
-      <div className='rounded-md bg-[#e8ebfa] p-1 flex items-center'>
+    <div className='rounded-xl border border-[#5f6686] bg-white px-3 py-3 sm:px-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4'>
+      <span className='text-sm md:text-base font-semibold text-[#1b2244] shrink-0'>{label}</span>
+      <div className='rounded-md bg-[#e8ebfa] p-1 flex flex-wrap items-center justify-end gap-1 min-w-0 sm:justify-end'>
         <button
           type='button'
           onClick={onLeftClick}
-          className={`${pillBase} ${leftActive ? 'bg-[#10bf62] text-[#06122f] border-[#0fa659]' : 'bg-transparent text-[#1b2244] border-transparent'}`}
+          className={`${pillBase} min-h-[44px] sm:min-h-0 ${leftActive ? 'bg-[#10bf62] text-[#06122f] border-[#0fa659]' : 'bg-transparent text-[#1b2244] border-transparent'}`}
         >
           {left}
         </button>
         <button
           type='button'
           onClick={onRightClick}
-          className={`${pillBase} ${!leftActive ? 'bg-[#10bf62] text-[#06122f] border-[#0fa659]' : 'bg-transparent text-[#1b2244] border-transparent'}`}
+          className={`${pillBase} min-h-[44px] sm:min-h-0 ${!leftActive ? 'bg-[#10bf62] text-[#06122f] border-[#0fa659]' : 'bg-transparent text-[#1b2244] border-transparent'}`}
         >
           {right}
         </button>
@@ -53,7 +53,7 @@ function AudienceRow({ options, value, onChange }) {
             key={opt}
             type='button'
             onClick={() => onChange(opt)}
-            className={`${pillBase} ${value === opt ? 'bg-[#10bf62] text-[#06122f] border-[#0fa659]' : 'bg-transparent text-[#1b2244] border-[#94a3b8]'}`}
+            className={`${pillBase} min-h-[44px] sm:min-h-0 ${value === opt ? 'bg-[#10bf62] text-[#06122f] border-[#0fa659]' : 'bg-transparent text-[#1b2244] border-[#94a3b8]'}`}
           >
             {opt}
           </button>
@@ -65,16 +65,16 @@ function AudienceRow({ options, value, onChange }) {
 
 function ScoreCard({ icon, title, score, value = 70, hint }) {
   return (
-    <div className='bg-[#4860bd] rounded-xl px-4 py-2 text-white shadow-sm'>
+    <div className='bg-[#4860bd] rounded-xl px-3 py-2.5 sm:px-4 sm:py-2 text-white shadow-sm'>
       <div className='flex items-center justify-between gap-2'>
         <div className='flex items-center gap-2 min-w-0'>
-          <span className='text-3xl shrink-0'>{icon}</span>
+          <span className='text-2xl sm:text-3xl shrink-0'>{icon}</span>
           <div className='min-w-0'>
-            <h3 className='text-lg md:text-xl font-bold leading-tight'>{title}</h3>
-            {hint ? <p className='text-xs text-[#dfe5ff] mt-0.5 leading-snug'>{hint}</p> : null}
+            <h3 className='text-base sm:text-lg md:text-xl font-bold leading-tight'>{title}</h3>
+            {hint ? <p className='text-[10px] sm:text-xs text-[#dfe5ff] mt-0.5 leading-snug'>{hint}</p> : null}
           </div>
         </div>
-        <span className='text-3xl md:text-4xl font-bold shrink-0'>{score}</span>
+        <span className='text-2xl sm:text-3xl md:text-4xl font-bold shrink-0 tabular-nums'>{score}</span>
       </div>
       <div className='mt-2 h-3 bg-[#dfe5ff] rounded-full overflow-hidden'>
         <div className='h-full bg-white rounded-full transition-[width] duration-200' style={{ width: `${value}%` }} />
@@ -225,14 +225,14 @@ export default function GamePage() {
 
   if (!hydrated || !playerId) {
     return (
-      <div className='min-h-screen bg-[#ebedf2] flex items-center justify-center text-[#1b2244]'>
+      <div className='min-h-[100dvh] bg-[#ebedf2] flex items-center justify-center text-[#1b2244] px-4 text-center'>
         Loading…
       </div>
     )
   }
 
   return (
-    <div className='min-h-screen bg-[#ebedf2] relative'>
+    <div className='min-h-[100dvh] bg-[#ebedf2] relative pb-[env(safe-area-inset-bottom)]'>
       <GameCountdownOverlay value={countdownNumber} />
       <Header
         currentLevel={currentLevel}
@@ -241,8 +241,8 @@ export default function GamePage() {
         onHelpClick={() => setIsInstructionOpen(true)}
       />
 
-      <main className='max-w-[1720px] mx-auto px-4 md:px-6 py-3 mt-5'>
-        <section className='grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4'>
+      <main className='max-w-[1720px] mx-auto px-3 sm:px-4 md:px-6 py-3 pb-[max(1.25rem,env(safe-area-inset-bottom))] mt-2 sm:mt-5'>
+        <section className='grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 mb-3 sm:mb-4'>
           <ScoreCard
             icon={<IoShield />}
             title='Privacy level'
@@ -259,40 +259,40 @@ export default function GamePage() {
           />
         </section>
 
-        <section className='grid grid-cols-1 xl:grid-cols-[2fr_1fr] gap-4 mt-7'>
-          <div className='space-y-3'>
-            <article className='rounded-lg border border-[#373a47] bg-white px-4 py-3'>
-              <h2 className='text-2xl md:text-4xl font-bold text-[#1b2244] leading-tight'>
+        {/* Mobile: scenario → post → adjust settings. xl: left column = scenario + post, right = sticky aside */}
+        <section className='grid grid-cols-1 xl:grid-cols-[minmax(0,2fr)_minmax(260px,1fr)] gap-4 mt-4 xl:mt-7'>
+            <article className='min-w-0 xl:col-start-1 xl:row-start-1 rounded-lg border border-[#373a47] bg-white px-3 py-3 sm:px-4'>
+              <h2 className='text-xl sm:text-2xl md:text-4xl font-bold text-[#1b2244] leading-tight'>
                 Scenario: {currentLevelConfig?.title ?? `Level ${currentLevel}`}
               </h2>
               <hr className='my-2 border-[#5d6475]' />
-              <p className='text-lg md:text-[20px] text-[#222639] leading-snug'>
+              <p className='text-base sm:text-lg md:text-[20px] text-[#222639] leading-snug'>
                 {currentLevelConfig?.scenarioDescription ?? ''}
               </p>
             </article>
 
-            <article ref={postCardRef} className='rounded-lg border border-[#373a47] bg-white overflow-hidden'>
-              <div className='px-4 py-3'>
-                <h2 className='text-xl md:text-[32px] font-bold text-[#1b2244] leading-tight'>Your New Post</h2>
+            <article ref={postCardRef} className='min-w-0 xl:col-start-1 xl:row-start-2 rounded-lg border border-[#373a47] bg-white overflow-hidden'>
+              <div className='px-3 py-3 sm:px-4'>
+                <h2 className='text-lg sm:text-xl md:text-[32px] font-bold text-[#1b2244] leading-tight'>Your New Post</h2>
                 <hr className='my-2 border-[#5d6475]' />
 
-                <div className='flex items-center justify-between gap-3 mb-3'>
-                  <div className='flex items-center gap-3'>
+                <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between mb-3'>
+                  <div className='flex items-center gap-3 min-w-0'>
                     <img
                       src={profileSrc}
                       alt='Profile'
-                      className='w-12 h-12 md:w-14 md:h-14 rounded-full object-cover'
+                      className='w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full object-cover shrink-0'
                     />
-                    <div>
-                      <p className='font-bold text-sm md:text-base text-[#161a2d]'>
+                    <div className='min-w-0'>
+                      <p className='font-bold text-sm md:text-base text-[#161a2d] truncate'>
                         {currentLevelConfig?.profileName?.trim() || username || 'Player'}
                       </p>
                       <p className='text-[#3973ba] text-xs md:text-sm'>Privacy Budget</p>
                     </div>
                   </div>
-                  <div className='flex items-center gap-2'>
-                    <span className='text-md md:text-lg text-[#161a2d]'>Audience:</span>
-                    <span className='px-4 py-1 rounded-lg bg-[#1f7dff] text-white text-sm md:text-lg font-semibold max-w-[140px] truncate'>
+                  <div className='flex flex-wrap items-center gap-2 sm:justify-end'>
+                    <span className='text-sm md:text-lg text-[#161a2d] shrink-0'>Audience:</span>
+                    <span className='px-3 py-1.5 rounded-lg bg-[#1f7dff] text-white text-xs sm:text-sm md:text-lg font-semibold max-w-full sm:max-w-[180px] truncate'>
                       {draft.audience}
                     </span>
                   </div>
@@ -303,12 +303,12 @@ export default function GamePage() {
                 <img
                   src={postSrc}
                   alt='Post content'
-                  className='w-full max-w-full max-h-[min(78dvh,920px)] h-auto object-contain'
+                  className='w-full max-w-full max-h-[min(52dvh,480px)] sm:max-h-[min(65dvh,720px)] xl:max-h-[min(78dvh,920px)] h-auto object-contain'
                 />
               </div>
 
-              <div className='px-4 py-3'>
-                <p className='text-base md:text-[24px] leading-tight text-[#1b1e2d]'>
+              <div className='px-3 py-3 sm:px-4'>
+                <p className='text-sm sm:text-base md:text-[24px] leading-tight text-[#1b1e2d] break-words'>
                   {draft.captionMode === 'edit'
                     ? draft.captionText || '(Your edited caption)'
                     : currentLevelConfig?.defaultPost?.caption ?? draft.captionText}
@@ -334,26 +334,36 @@ export default function GamePage() {
                 )}
               </div>
 
-              <div className='px-4 py-3 border-t border-[#5d6475] flex items-center justify-around text-[#1b1f32]'>
-                <button type='button' className='flex items-center gap-2 text-lg md:text-xl'>
-                  <FaRegThumbsUp size={20} />
+              <div className='px-2 py-2 sm:px-4 sm:py-3 border-t border-[#5d6475] flex items-center justify-between sm:justify-around text-[#1b1f32] gap-1'>
+                <button
+                  type='button'
+                  className='flex flex-1 sm:flex-initial min-h-[44px] items-center justify-center gap-1.5 text-sm sm:text-lg md:text-xl px-1'
+                >
+                  <FaRegThumbsUp size={18} className='sm:w-5 sm:h-5' />
                   <span>Like</span>
                 </button>
-                <button type='button' className='flex items-center gap-2 text-lg md:text-xl'>
-                  <FaRegCommentDots size={20} />
+                <button
+                  type='button'
+                  className='flex flex-1 sm:flex-initial min-h-[44px] items-center justify-center gap-1.5 text-sm sm:text-lg md:text-xl px-1'
+                >
+                  <FaRegCommentDots size={18} className='sm:w-5 sm:h-5' />
                   <span>Comment</span>
                 </button>
-                <button type='button' className='flex items-center gap-2 text-lg md:text-xl'>
-                  <FaRegShareSquare size={20} />
+                <button
+                  type='button'
+                  className='flex flex-1 sm:flex-initial min-h-[44px] items-center justify-center gap-1.5 text-sm sm:text-lg md:text-xl px-1'
+                >
+                  <FaRegShareSquare size={18} className='sm:w-5 sm:h-5' />
                   <span>Share</span>
                 </button>
               </div>
             </article>
-          </div>
 
-          <aside className='rounded-3xl border border-[#66709b] bg-[#dfe4f4] overflow-hidden h-fit mt-15'>
-            <div className='bg-[#4860bd] px-5 py-3'>
-              <h2 className='text-white text-2xl md:text-4xl font-bold leading-[0.95]'>Adjust Setting Here:</h2>
+          <aside className='rounded-3xl border border-[#66709b] bg-[#dfe4f4] overflow-hidden h-fit xl:col-start-2 xl:row-start-1 xl:row-span-2 xl:sticky xl:top-3 xl:max-h-[calc(100dvh-5rem)] xl:overflow-y-auto'>
+            <div className='bg-[#4860bd] px-4 py-3 sm:px-5'>
+              <h2 className='text-white text-lg sm:text-2xl md:text-4xl font-bold leading-tight'>
+                Adjust settings
+              </h2>
             </div>
 
             <div className='p-3 space-y-2.5'>
@@ -392,15 +402,16 @@ export default function GamePage() {
                   value={draft.captionText}
                   onChange={(e) => updateDraft({ captionText: e.target.value })}
                   rows={3}
-                  className='w-full rounded-lg border-2 border-[#5f6686] px-3 py-2 text-sm text-[#1b2244]'
+                  className='w-full rounded-lg border-2 border-[#5f6686] px-3 py-2.5 text-base text-[#1b2244]'
                   placeholder='Write your caption…'
+                  style={{ fontSize: '16px' }}
                 />
               )}
 
               <ToggleRow
                 label='Photo Crop:'
                 left='Original'
-                right='Crop/Blur Image'
+                right='Crop / blur'
                 leftActive={draft.photoOption === 'Original'}
                 onLeftClick={handleChooseOriginal}
                 onRightClick={openImagePicker}
@@ -413,7 +424,7 @@ export default function GamePage() {
               <button
                 type='button'
                 onClick={scrollToPreview}
-                className='w-full py-2.5 mt-1 rounded-lg text-lg md:text-xl font-bold text-white bg-[#79a7e8] border border-[#3e5a96]'
+                className='w-full py-3 mt-1 rounded-lg text-base sm:text-lg md:text-xl font-bold text-white bg-[#79a7e8] border border-[#3e5a96] min-h-[48px]'
               >
                 Show post preview
               </button>
@@ -421,7 +432,7 @@ export default function GamePage() {
                 type='button'
                 onClick={handlePostNow}
                 disabled={loading || Boolean(privacyBudgetCompletedAt)}
-                className='w-full py-2.5 rounded-lg text-lg md:text-xl font-bold text-white bg-[#2f79df] border border-[#234f92] disabled:opacity-50 disabled:cursor-not-allowed'
+                className='w-full py-3 rounded-lg text-base sm:text-lg md:text-xl font-bold text-white bg-[#2f79df] border border-[#234f92] disabled:opacity-50 disabled:cursor-not-allowed min-h-[48px]'
               >
                 {loading ? 'Posting…' : privacyBudgetCompletedAt ? 'Session complete' : 'Post Now'}
               </button>

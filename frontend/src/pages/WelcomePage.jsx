@@ -32,15 +32,15 @@ function WelcomePage() {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center px-5 py-10 sm:py-14"
+      className="min-h-[100dvh] flex flex-col items-center px-4 sm:px-5 py-8 sm:py-14 pb-[max(2rem,env(safe-area-inset-bottom))]"
       style={{ backgroundColor: SKY }}
     >
       {/* Brand + hero copy — centered, generous spacing like mockup 1 */}
-      <header className="flex flex-col items-center text-center max-w-xl w-full mb-10 sm:mb-14">
+      <header className="flex flex-col items-center text-center max-w-xl w-full mb-8 sm:mb-14 pt-[max(0.5rem,env(safe-area-inset-top))]">
         <img
           src={logo}
           alt="Privacy Budget"
-          className="w-[70%] h-auto object-contain mb-5 mt-20"
+          className="w-[min(85%,280px)] sm:w-[70%] h-auto object-contain mb-5 mt-8 sm:mt-20"
         />
         <p
           className="text-[11px] sm:text-xs font-semibold tracking-[0.2em] uppercase mb-3 mt-3"
@@ -131,7 +131,7 @@ function WelcomePage() {
           type="button"
           onClick={handleBegin}
           disabled={loading}
-          className="w-full sm:w-auto min-w-[140px] mx-auto rounded-full py-3 px-10 text-base font-bold text-white shadow-md transition hover:brightness-110 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed"
+          className="w-full sm:w-auto min-w-[140px] min-h-[48px] mx-auto rounded-full py-3 px-10 text-base font-bold text-white shadow-md transition hover:brightness-110 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed touch-manipulation"
           style={{ backgroundColor: BTN }}
         >
           {loading ? 'Starting…' : 'Begin'}

@@ -15,9 +15,9 @@ export default function MusicToggleButton() {
         'fixed z-50 flex shrink-0 items-center justify-center gap-1.5 rounded-lg border border-gray-200 bg-white/95 shadow-md transition-colors',
         'hover:bg-white active:scale-95 touch-manipulation',
         // Mobile: single corner (top + right only) — explicit size so nothing expands
-        'right-3 top-3 h-11 w-11 p-0 sm:h-auto sm:w-auto sm:p-2.5',
+        'right-[max(0.75rem,env(safe-area-inset-right))] top-[max(0.75rem,env(safe-area-inset-top))] h-11 w-11 p-0 sm:h-auto sm:w-auto sm:p-2.5',
         // Desktop / larger phones: bottom-left with optional label
-        'sm:bottom-16 sm:left-4 sm:right-auto sm:top-auto',
+        'sm:bottom-[max(1rem,env(safe-area-inset-bottom))] sm:left-[max(1rem,env(safe-area-inset-left))] sm:right-auto sm:top-auto',
       ].join(' ')}
       aria-label={isPlaying ? 'Mute music' : 'Play music'}
       title={isPlaying ? 'Mute music' : 'Play music'}

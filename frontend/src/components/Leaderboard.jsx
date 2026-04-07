@@ -51,7 +51,9 @@ function Leaderboard({ currentPlayerName }) {
         <div className='bg-[#ddecff] rounded-2xl p-3 flex flex-col items-center justify-center w-full'>
           <div className='bg-white rounded-2xl flex flex-col w-full p-3'>
             <div className='flex gap-3 items-center mb-4 border-b border-[#000000] pb-2'>
-              <h1 className='text-xl sm:text-2xl font-bold'>LEADERBOARD – PRIVACY BUDGET</h1>
+              <h1 className='text-base sm:text-xl md:text-2xl font-bold leading-tight'>
+                LEADERBOARD – PRIVACY BUDGET
+              </h1>
             </div>
 
             {loading ? (
@@ -68,23 +70,22 @@ function Leaderboard({ currentPlayerName }) {
                 return (
                   <div key={`${item.rank}-${item.name}`} className='flex flex-col gap-2 py-1'>
                     <div
-                      className={`grid gap-4 items-center rounded-lg px-1 -mx-1 ${
+                      className={`grid grid-cols-1 gap-1.5 sm:grid-cols-[1.15fr_0.7fr_1.15fr] sm:gap-4 sm:items-center rounded-lg px-2 py-2 sm:px-1 sm:py-1 -mx-1 ${
                         isYou ? 'bg-[#e0e9ff] ring-2 ring-[#4860bd]' : ''
                       }`}
-                      style={{
-                        gridTemplateColumns: '1.15fr 0.7fr 1.15fr',
-                      }}
                     >
-                      <p className='text-base sm:text-lg'>
+                      <p className='text-sm sm:text-base md:text-lg break-words'>
                         {item.rank}. {item.name}
                         {isYou ? (
-                          <span className='ml-2 text-sm font-bold text-[#1d4ed8]'>(you)</span>
+                          <span className='ml-2 text-xs sm:text-sm font-bold text-[#1d4ed8]'>(you)</span>
                         ) : null}
                       </p>
-                      <p className='text-base sm:text-lg text-right tabular-nums'>
-                        {item.score.toLocaleString()} Points
+                      <p className='text-sm sm:text-base md:text-lg sm:text-right tabular-nums font-medium'>
+                        {item.score.toLocaleString()} pts
                       </p>
-                      <p className='text-base sm:text-lg text-right'>{rowTitle(item)}</p>
+                      <p className='text-xs sm:text-base md:text-lg sm:text-right text-[#334684] break-words'>
+                        {rowTitle(item)}
+                      </p>
                     </div>
                     <div className='h-0.5 bg-[#2e0f53] w-full mt-1 mb-1' />
                   </div>

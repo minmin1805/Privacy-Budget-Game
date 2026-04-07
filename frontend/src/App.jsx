@@ -36,7 +36,7 @@ function AppContent() {
   }, [location.pathname, startMusic])
 
   return (
-    <>
+    <div className='min-h-[100dvh]'>
       {location.pathname !== '/' && <MusicToggleButton />}
       <Routes>
         <Route path="/" element={<ContentWarningPage />} />
@@ -45,7 +45,7 @@ function AppContent() {
         <Route path="/game" element={<GamePage />} />
         <Route path="/endgame" element={<EndgamePage />} />
       </Routes>
-    </>
+    </div>
   )
 }
 
