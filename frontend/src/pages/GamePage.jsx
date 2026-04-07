@@ -21,9 +21,9 @@ const pillBase =
 
 function ToggleRow({ label, left, right, leftActive = true, onLeftClick, onRightClick }) {
   return (
-    <div className='rounded-xl border border-[#5f6686] bg-white px-3 py-3 sm:px-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4'>
-      <span className='text-sm md:text-base font-semibold text-[#1b2244] shrink-0'>{label}</span>
-      <div className='rounded-md bg-[#e8ebfa] p-1 flex flex-wrap items-center justify-end gap-1 min-w-0 sm:justify-end'>
+    <div className='rounded-xl border border-[#5f6686] bg-white px-3 py-2.5 sm:px-4 w-full min-w-0 grid items-center gap-x-2 sm:gap-x-4 [grid-template-columns:minmax(0,1fr)_auto]'>
+      <span className='text-sm md:text-base font-semibold text-[#1b2244] min-w-0 truncate'>{label}</span>
+      <div className='rounded-md bg-[#e8ebfa] p-1 inline-flex flex-nowrap items-center gap-1 w-max max-w-full'>
         <button
           type='button'
           onClick={onLeftClick}

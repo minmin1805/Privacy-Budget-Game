@@ -11,7 +11,7 @@
       "slug": "picture-at-the-gate",
       "title": "Picture at the gate",
       "riskProfile": "dangerous",
-      "scenarioDescription": "Alex is excited about a big day and wants to share a quick selfie from outside a school. The building behind them includes clear identifying context if the frame stays wide. Decide who should see it, whether location is attached, what the caption says, and whether the photo should stay wide or get tighter.",
+      "scenarioDescription": "Alex is excited about a big day and wants to share a quick selfie from outside a school. The wide frame keeps the building and entrance in view. It’s a personal milestone—think about who you’d want in the room for that kind of news, not just whoever scrolls by.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
@@ -68,7 +68,7 @@
       "slug": "friends-at-the-fair",
       "title": "Friends at the fair",
       "riskProfile": "dangerous",
-      "scenarioDescription": "You’re at a community event with friends and someone snaps a group photo. A big banner and booth details can anchor where and when this was—more than you want if the post is too public. A broad city/region location tag is fine; the risk is oversharing in the caption and audience.",
+      "scenarioDescription": "A group shot from a community fair—spring banners and booth details sit in the background. It’s a day-out with your people: the kind of memory that often lands in a smaller circle than a billboard.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
@@ -120,7 +120,7 @@
       "slug": "new-wheels",
       "title": "New wheels",
       "riskProfile": "dangerous",
-      "scenarioDescription": "You want to show off a new car. A normal photo can still expose too much if a license plate or windshield pass stays visible to a broad audience. Use a broad state/region location tag (on)—not a parking pin.",
+      "scenarioDescription": "A proud new-car photo—the plate and a background billboard are still in the frame. You’re celebrating something personal; worth matching who sees the post to who you’d tell about the new ride first.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
@@ -172,7 +172,7 @@
       "slug": "sideline-snap",
       "title": "Sideline snap",
       "riskProfile": "dangerous",
-      "scenarioDescription": "Someone took a sideline photo during practice. The frame includes jersey identity and a schedule cue in the background.",
+      "scenarioDescription": "A sideline snap from practice—jersey details and a schedule board sit in the background. It’s team energy: the people who share that dugout matter more than a random scroll.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
@@ -224,7 +224,7 @@
       "slug": "coffee-catch-up",
       "title": "Coffee catch-up",
       "riskProfile": "safe",
-      "scenarioDescription": "A relaxed coffee table photo with friends. Nothing in the frame needs hiding; the lesson is audience, caption, and using a broad city tag—not a specific café pin.",
+      "scenarioDescription": "A relaxed coffee-table photo with friends—nothing in the frame needs hiding. Everyday warmth, the sort of moment people often reserve for folks they actually grab coffee with.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
@@ -273,7 +273,7 @@
       "slug": "cousins-weekend",
       "title": "Cousins’ weekend",
       "riskProfile": "safe",
-      "scenarioDescription": "A family group photo outdoors—warm and shareable. No addresses or readable IDs in frame. Decoys: objects may look like mail or a spelled-out banner—players should learn they aren’t actually readable.",
+      "scenarioDescription": "A family group photo outdoors on a picnic hill—warm poses, open sky. A weekend-with-family vibe; some people keep that album closer to relatives and close friends than to the open feed.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
@@ -321,7 +321,7 @@
       "slug": "airport-gate",
       "title": "Airport gate",
       "riskProfile": "safe",
-      "scenarioDescription": "You’re waiting at a gate with friends. Screens and tags look sensitive, but this frame is designed so nothing is actually readable—the lesson is not to panic-crop; focus on audience and a broad travel-area tag.",
+      "scenarioDescription": "Waiting at the gate with friends—screens and signage in the background, but nothing here is meant to read like a leak. Still a travel-day moment: who you’d text “we’re at the gate” is a useful gut check.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
@@ -365,7 +365,7 @@
       "slug": "mirror-checklist",
       "title": "Mirror checklist",
       "riskProfile": "dangerous",
-      "scenarioDescription": "A mirror selfie while trying a new outfit. The room includes multiple readable notes and an ID-like tag—high information density in one frame.",
+      "scenarioDescription": "A mirror selfie while trying a new outfit—notes on the glass and bits around the mirror pack a lot of detail into one shot. A fit check at home; some people share that mainly with visitors who’ve already seen the room.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
@@ -417,7 +417,7 @@
       "slug": "birthday-at-the-door",
       "title": "Birthday at the door",
       "riskProfile": "dangerous",
-      "scenarioDescription": "A birthday gathering near a home entrance. The party is shareable, but readable address text on the wall is a strong leak. Use a broad city tag (on)—not your street—and tighten audience; blur the address in the image.",
+      "scenarioDescription": "A birthday gathering near the door—balloons, smiles, and readable text on the wall by the entrance. Celebratory, but the scene still whispers “here’s home” louder than a hall-party snapshot.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
@@ -469,7 +469,7 @@
       "slug": "night-market",
       "title": "Night market",
       "riskProfile": "dangerous",
-      "scenarioDescription": "An evening street-food moment looks fun, but a large readable sign gives exact place and hours. Tighten audience and caption; keep a broad regional location tag on—not the venue pin.",
+      "scenarioDescription": "An evening street-food shot—a big sign in frame nails the place and hours. Late-night energy; the kind of night people sometimes recap in a tighter thread before they’d broadcast it wide.",
       "defaultPost": {
         "audience": "Public",
         "locationTagOn": true,
