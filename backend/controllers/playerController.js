@@ -4,6 +4,10 @@ import Player from '../models/Player.js';
 import { gradeCaption } from '../services/captionGradingService.js';
 import { scorePrivacyBudgetLevel } from '../services/privacyBudgetScoringService.js';
 
+function isDuplicateKeyError(error) {
+    return error && (error.code === 11000 || error.code === 11001);
+}
+
 export const createPlayer = async (req, res) => {
     try {
         const { username } = req.body;
@@ -12,10 +16,12 @@ export const createPlayer = async (req, res) => {
             return res.status(400).json({ message: 'Username is required' });
         }
 
+        const trimmedName = username.trim();
+
         const createSessionId = crypto.randomUUID();
 
         const createdPlayer = await Player.create({
-            name: username,
+            name: trimmedName,
             sessionId: createSessionId,
         });
 
@@ -29,6 +35,23 @@ export const createPlayer = async (req, res) => {
             sessionId: createdPlayer.sessionId,
         });
     } catch (error) {
+        if (isDuplicateKeyError(error)) {
+            const patternKeys = error.keyPattern ? Object.keys(error.keyPattern) : [];
+            const valueKeys = error.keyValue && typeof error.keyValue === 'object' ? Object.keys(error.keyValue) : [];
+            const dupFields = new Set([...patternKeys, ...valueKeys]);
+            if (dupFields.has('name')) {
+                return res.status(409).json({
+                    message:
+                        'That name is already in use. Please choose a different nickname and try again.',
+                });
+            }
+            if (dupFields.has('sessionId')) {
+                return res.status(503).json({
+                    message: 'Could not start a new session. Please tap Begin again.',
+                });
+            }
+        }
+        console.error('[createPlayer]', error);
         return res.status(500).json({ error: error.message });
     }
 };
