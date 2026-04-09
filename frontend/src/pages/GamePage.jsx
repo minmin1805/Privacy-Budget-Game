@@ -420,14 +420,6 @@ export default function GamePage() {
               {draft.photoOption !== 'Original' && (
                 <p className='text-xs text-[#1b2244] font-medium'>Selected: {draft.photoOption}</p>
               )}
-
-              <button
-                type='button'
-                onClick={scrollToPreview}
-                className='w-full py-3 mt-1 rounded-lg text-base sm:text-lg md:text-xl font-bold text-white bg-[#79a7e8] border border-[#3e5a96] min-h-[48px]'
-              >
-                Show post preview
-              </button>
               <button
                 type='button'
                 onClick={handlePostNow}
