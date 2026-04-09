@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import Leaderboard from '../components/Leaderboard'
 import { IoMdDownload } from 'react-icons/io'
 import logo from '../assets/Photo/EndgamePage/logo.png'
+import checklistPdfUrl from '../assets/PDF/pdf.pdf'
 import ScoreDisplay from '../components/ScoreDisplay'
 import { usePrivacyBudget } from '../context/PrivacyBudgetContext'
 import { getSessionTitleFromScore } from '../utils/sessionTitle'
@@ -48,12 +49,13 @@ export default function EndgamePage() {
       </div>
 
       <div className='flex flex-col sm:flex-row mt-8 sm:mt-10 gap-3 sm:gap-8 justify-center w-full max-w-xl sm:max-w-none px-4 sm:px-6 pb-8'>
-        <button
-          type='button'
-          className='bg-[#ddecff] text-blue-900 px-4 py-3 rounded-md text-base sm:text-lg md:text-xl font-bold flex items-center justify-center gap-2 min-h-[48px] w-full sm:w-auto touch-manipulation'
+        <a
+          href={checklistPdfUrl}
+          download='Privacy-Budget-Safety-Checklist.pdf'
+          className='bg-[#ddecff] text-blue-900 px-4 py-3 rounded-md text-base sm:text-lg md:text-xl font-bold flex items-center justify-center gap-2 min-h-[48px] w-full sm:w-auto touch-manipulation no-underline text-center'
         >
-          <IoMdDownload /> Download Safety Checklist!
-        </button>
+          <IoMdDownload aria-hidden /> Download Safety Checklist!
+        </a>
         <button
           type='button'
           className='bg-[#ddecff] text-blue-900 px-4 py-3 rounded-md text-base sm:text-lg md:text-xl font-bold min-h-[48px] w-full sm:w-auto touch-manipulation'
