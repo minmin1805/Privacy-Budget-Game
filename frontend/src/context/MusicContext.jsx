@@ -1,6 +1,9 @@
 import { createContext, useContext, useState, useRef, useCallback, useEffect } from 'react'
 import bgMusicSrc from '../assets/Sound/background.mp3'
 
+/** 0–1; background bed should sit under UI/SFX (click sounds use ~0.5 in SoundContext). */
+const BACKGROUND_MUSIC_VOLUME = 0.02
+
 const MusicContext = createContext(null)
 
 export function MusicProvider({ children }) {
@@ -26,7 +29,7 @@ export function MusicProvider({ children }) {
       setIsPlaying(false)
       setMusicEnabled(false)
     } else {
-      audio.volume = 0.4
+      audio.volume = BACKGROUND_MUSIC_VOLUME
       audio.play().then(() => setIsPlaying(true)).catch(() => {})
       setMusicEnabled(true)
     }
@@ -35,7 +38,7 @@ export function MusicProvider({ children }) {
   const startMusic = useCallback(() => {
     const audio = audioRef.current
     if (!audio || !musicEnabledRef.current || isPlayingRef.current) return
-    audio.volume = 0.4
+    audio.volume = BACKGROUND_MUSIC_VOLUME
     audio.play().then(() => setIsPlaying(true)).catch(() => {})
   }, [])
 
