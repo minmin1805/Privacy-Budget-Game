@@ -30,7 +30,8 @@ app.use(express.json());
 app.use("/api/players", playerRoutes);
 app.use("/api/privacy-budget", privacyBudgetRoutes);
 
-const PORT = process.env.PORT || 8000;
+const PORT = Number(process.env.PORT) || 8000;
+const HOST = process.env.HOST || '0.0.0.0';
 
 // Serve Vite build when present. Render (and many hosts) do not set NODE_ENV=production by default,
 // so we key off the dist folder instead of only NODE_ENV.
@@ -50,8 +51,8 @@ if (fs.existsSync(indexHtml)) {
 }
 
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+app.listen(PORT, HOST, () => {
+    console.log(`Server is running on ${HOST}:${PORT}`);
     connectDB();
 });
 
