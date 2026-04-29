@@ -137,6 +137,10 @@ function WelcomePage() {
           {loading ? 'Starting…' : 'Begin'}
         </button>
       </div>
+
+      <p className="mt-6 text-center text-xs sm:text-sm font-semibold opacity-80" style={{ color: NAVY }}>
+        Design & development by Minh Doan
+      </p>
     </div>
   )
 }

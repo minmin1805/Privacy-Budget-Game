@@ -64,6 +64,10 @@ export default function EndgamePage() {
           Exit To Menu
         </button>
       </div>
+
+      <p className='text-center text-xs sm:text-sm font-semibold text-[#1b2244] opacity-80 pb-3'>
+        Design & development by Minh Doan
+      </p>
     </div>
   )
 }
