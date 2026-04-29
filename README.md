@@ -112,6 +112,8 @@ Budget Privacy/
 │   ├── public/
 │   ├── vite.config.js
 │   └── package.json
+├── scripts/reports/       # KPI export + metric dictionary (METRICS.md)
+├── reports/               # Generated JSON snapshots (ignored by git)
 ├── package.json            # Root: start backend, combined build
 ├── .env.example            # Template for environment variables
 └── README.md
@@ -213,6 +215,27 @@ Vite only exposes variables prefixed with **`VITE_`**.
    ```
 
 3. **Deploy tips** (e.g. [Render](https://render.com/)): set **`PORT`** and **`MONGO_URI`** in the host dashboard; build command can be `npm run build`; start command `npm start` or `node backend/server.js`. Ensure the process **binds** to the host (this repo uses `HOST=0.0.0.0` by default in `server.js`).
+
+---
+
+## KPI reports (analytics / resume)
+
+Aggregate stats are computed **directly from `players`** (no extra telemetry collection required for these KPIs).
+
+1. **Definitions & Compass snippets:** `scripts/reports/METRICS.md`  
+2. **Run the export** (needs network access to Atlas / MongoDB):
+
+   ```bash
+   npm run metrics:privacy
+   ```
+
+   Optional UTC date window on `createdAt`:
+
+   ```bash
+   node scripts/reports/privacyBudgetMetrics.mjs --from 2026-01-01 --to 2026-04-30
+   ```
+
+This prints JSON to stdout and writes a timestamped file under `reports/`. Metrics include starts, completes, completion rate, score stats for completers, feedback-band mix, level funnel, caption keep/edit mix, and median session duration among completers.
 
 ---
 
